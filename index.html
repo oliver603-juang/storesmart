@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>StoreSmart 智慧收納</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-app-compat.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-firestore-compat.min.js"></script>
+<style>
+:root {
+  --bg:#0d0d0d; --surface:#161616; --card:#1e1e1e; --border:#2a2a2a;
+  --accent:#f59e0b; --accent-bg:rgba(245,158,11,0.12); --accent-dim:rgba(245,158,11,0.06);
+  --text:#e8e8e8; --muted:#777; --dim:#444;
+  --green:#22c55e; --green-bg:rgba(34,197,94,0.12);
+  --blue:#3b82f6; --blue-bg:rgba(59,130,246,0.12);
+  --red:#ef4444; --red-bg:rgba(239,68,68,0.12);
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Noto Sans TC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;font-size:15px}
+.screen{display:none;flex-direction:column;min-height:100vh}
+.screen.active{display:flex}
+
+/* HEADER */
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.header-title{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--accent);letter-spacing:0.05em}
+.back-btn{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:4px 0;font-family:var(--sans)}
+.back-btn:hover{color:var(--text)}
+.header-actions{display:flex;gap:8px}
+.icon-btn{background:none;border:1px solid var(--border);color:var(--muted);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* BUTTONS */
+.btn-primary{width:100%;background:var(--accent);color:#0d0d0d;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--sans);margin-top:8px;transition:opacity .15s}
+.btn-primary:hover{opacity:.9}
+.btn-primary:active{opacity:.7}
+.btn-ghost{width:100%;background:none;border:1px solid var(--border);color:var(--muted);padding:12px;border-radius:10px;font-size:14px;cursor:pointer;font-family:var(--sans);margin-top:8px}
+.btn-ghost:hover{border-color:var(--text);color:var(--text)}
+.btn-sm{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:6px;font-size:13px;cursor:pointer;font-family:var(--sans)}
+.btn-sm:hover{border-color:var(--accent)}
+.btn-danger{background:var(--red-bg);border:1px solid var(--red);color:var(--red);padding:6px 14px;border-radius:6px;font-size:13px;cursor:pointer}
+
+/* SETUP SCREEN */
+#s-setup{background:var(--bg)}
+.setup-container{max-width:440px;margin:0 auto;padding:40px 20px}
+.logo-block{text-align:center;margin-bottom:36px}
+.logo-icon{font-size:48px;color:var(--accent);margin-bottom:12px}
+.logo-block h1{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--text)}
+.logo-sub{color:var(--muted);font-size:14px;margin-top:4px}
+.setup-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px}
+.setup-card h3{font-size:15px;font-weight:700;margin-bottom:20px;color:var(--text)}
+.setup-card label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;margin-top:14px;font-family:var(--mono);letter-spacing:.04em}
+.setup-card input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-size:14px;font-family:var(--mono);outline:none}
+.setup-card input:focus{border-color:var(--accent)}
+.req{background:var(--accent-bg);color:var(--accent);font-size:10px;padding:2px 6px;border-radius:4px;margin-left:6px;font-family:var(--sans)}
+.divider{display:flex;align-items:center;gap:10px;margin:20px 0 4px;color:var(--muted);font-size:12px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.opt-label{font-size:11px;color:var(--dim);text-align:center;margin-top:14px}
+
+/* MAIN SCREEN */
+.main-content{flex:1;overflow-y:auto;padding:0 0 80px}
+.scan-section{padding:24px 20px 16px}
+.scan-btn{width:100%;background:var(--accent-dim);border:2px dashed var(--accent);border-radius:16px;padding:36px 20px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;transition:background .15s;color:var(--text)}
+.scan-btn:active{background:var(--accent-bg)}
+.scan-icon{font-size:40px;color:var(--accent)}
+.scan-btn>span:first-of-type{font-size:16px;font-weight:700}
+.scan-sub{font-size:12px;color:var(--muted)}
+.search-section{padding:0 20px 16px}
+.search-bar{display:flex;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0 14px;gap:8px}
+.search-bar input{flex:1;background:none;border:none;color:var(--text);padding:12px 0;font-size:14px;outline:none;font-family:var(--sans)}
+.search-icon{color:var(--muted);font-size:16px}
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 20px 16px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.stat-num{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--accent)}
+.stat-label{font-size:11px;color:var(--muted);margin-top:2px}
+.section-header{padding:4px 20px 10px;font-size:12px;font-family:var(--mono);color:var(--muted);letter-spacing:.06em}
+
+/* ITEM LIST */
+.item-list{padding:0 20px}
+.padded{padding:16px 20px}
+.item-row{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .15s}
+.item-row:hover{border-color:var(--accent)}
+.item-thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--surface);flex-shrink:0}
+.item-thumb-placeholder{width:44px;height:44px;border-radius:8px;background:var(--surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--dim)}
+.item-info{flex:1;min-width:0}
+.item-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-meta{display:flex;align-items:center;gap:6px;margin-top:3px}
+.item-loc{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:700}
+.item-cat{font-size:11px;color:var(--muted)}
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted);font-size:14px}
+.empty-icon{font-size:36px;margin-bottom:12px;color:var(--dim)}
+
+/* PROCESSING SCREEN */
+#s-processing{background:var(--bg);justify-content:center;align-items:center}
+.processing-container{text-align:center;padding:40px}
+.spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#processing-msg{color:var(--muted);font-size:14px;font-family:var(--mono)}
+
+/* RESULT SCREEN */
+.result-content{flex:1;overflow-y:auto;padding:20px}
+.result-image-wrap{width:100%;max-height:200px;border-radius:12px;overflow:hidden;background:var(--card);margin-bottom:16px;border:1px solid var(--border)}
+.result-image-wrap img{width:100%;height:200px;object-fit:cover}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.result-name-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+.result-name{font-size:18px;font-weight:700;flex:1}
+.category-badge{font-size:11px;padding:3px 8px;border-radius:5px;background:var(--blue-bg);color:var(--blue);white-space:nowrap;margin-top:3px;flex-shrink:0}
+.result-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.match-banner{background:var(--green-bg);border:1px solid var(--green);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.match-banner-title{font-size:13px;font-weight:700;color:var(--green);margin-bottom:4px}
+.match-banner-sub{font-size:12px;color:var(--muted)}
+.location-display{background:var(--accent-dim);border:2px solid var(--accent);border-radius:14px;padding:20px;margin-bottom:20px;text-align:center}
+.location-label{font-size:12px;color:var(--accent);font-family:var(--mono);letter-spacing:.06em;margin-bottom:10px}
+.location-main{display:flex;align-items:center;justify-content:center;gap:12px}
+.loc-zone{font-family:var(--mono);font-size:16px;color:var(--muted)}
+.loc-bag{font-family:var(--mono);font-size:42px;font-weight:700;color:var(--accent)}
+.result-actions{display:flex;flex-direction:column;gap:8px}
+
+/* INVENTORY SCREEN */
+.zone-group{margin-bottom:24px}
+.zone-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.zone-code{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);width:36px}
+.zone-name{font-size:14px;font-weight:500}
+.zone-count{font-size:12px;color:var(--muted);margin-left:auto;font-family:var(--mono)}
+.bag-group{margin-bottom:12px}
+.bag-header{font-family:var(--mono);font-size:12px;color:var(--muted);padding:6px 10px;background:var(--surface);border-radius:6px;margin-bottom:6px;letter-spacing:.04em;display:flex;align-items:center;gap:6px}
+.bag-header span{color:var(--accent);font-weight:700}
+
+/* DETAIL MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;display:flex;align-items:flex-end}
+.modal-overlay.hidden{display:none}
+.modal-sheet{background:var(--card);border-radius:20px 20px 0 0;padding:24px 20px;width:100%;max-height:80vh;overflow-y:auto}
+.modal-drag{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px}
+.modal-name{font-size:18px;font-weight:700;margin-bottom:4px}
+.modal-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.modal-key{color:var(--muted)}
+.modal-val{font-family:var(--mono);font-weight:700;color:var(--accent)}
+.modal-actions{display:flex;gap:8px;margin-top:16px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--green);color:#0d0d0d;padding:10px 20px;border-radius:24px;font-size:14px;font-weight:700;z-index:200;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* BATCH */
+.batch-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.batch-item.processing{border-color:var(--accent);background:var(--accent-dim)}
+.batch-item.done{border-color:var(--green);opacity:.8}
+.batch-item.error{border-color:var(--red);background:var(--red-bg)}
+.batch-thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--surface)}
+.batch-info{flex:1;min-width:0}
+.batch-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+.batch-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.batch-status-icon{font-size:18px;flex-shrink:0;width:22px;text-align:center}
+.keywords{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.keyword-tag{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:11px;padding:3px 8px;border-radius:4px;font-family:var(--mono)}
+
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ SETUP SCREEN ═══════════════════ -->
+<div id="s-setup" class="screen">
+<div class="setup-container">
+  <div class="logo-block">
+    <div class="logo-icon"><img src="icon-192.png" style="width:48px;height:48px;border-radius:12px" alt="StoreSmart"></div>
+    <h1>StoreSmart</h1>
+    <p class="logo-sub">智慧收納系統</p>
+  </div>
+  <div class="setup-card">
+    <h3>初始設定</h3>
+    <label id="lbl-apikey">Anthropic API Key <span class="req">必填</span></label>
+    <input type="password" id="inp-apikey" placeholder="sk-ant-api03-..." autocomplete="off">
+    <div class="divider"><span>Firebase 多裝置同步（選填）</span></div>
+    <label>Project ID</label>
+    <input type="text" id="inp-fbproject" placeholder="my-storage-app">
+    <label>Firebase API Key</label>
+    <input type="password" id="inp-fbapikey" placeholder="AIzaSy...">
+    <label>收藏集名稱</label>
+    <input type="text" id="inp-fbcol" placeholder="items" value="items">
+    <button class="btn-primary" onclick="saveSetup()">開始使用</button>
+    <button class="btn-ghost" onclick="useLocalOnly()">僅使用本機儲存（單裝置）</button>
+    <p class="opt-label">Firebase 設定可讓多支手機共用同一個收納資料庫</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════ MAIN SCREEN ═══════════════════ -->
+<div id="s-main" class="screen">
+<div class="header">
+  <span class="header-title">◈ StoreSmart</span>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="openLocations()" title="收納位置">⊞</button>
+    <button class="icon-btn" onclick="openInventory()" title="全部物品">☰</button>
+    <button class="icon-btn" onclick="showScreen('s-setup')" title="設定">⚙</button>
+  </div>
+</div>
+<div class="main-content">
+  <div class="scan-section">
+    <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none" onchange="handleCapture(event)">
+    <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handleBatchCapture(event)">
+    <button class="scan-btn" onclick="triggerCamera()">
+      <div class="scan-icon">⬡</div>
+      <span>拍照建檔</span>
+      <span class="scan-sub">點擊開啟相機</span>
+    </button>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn-sm" style="flex:1" onclick="document.getElementById('file-input').click()">相簿（可多選）</button>
+      <button class="btn-sm" style="flex:1" onclick="document.getElementById('lens-input').click()">Lens 截圖（可多選）</button>
+    </div>
+    <input type="file" id="lens-input" accept="image/*" multiple style="display:none" onchange="handleBatchLens(event)">
+    <!-- 商品名稱直接輸入 -->
+    <div style="margin-top:12px">
+      <div style="display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0 12px">
+        <span style="font-size:15px;color:var(--muted)">🔍</span>
+        <input type="text" id="product-name-input" placeholder="貼上商品名稱（從 Google Lens 複製）…"
+          style="flex:1;background:none;border:none;color:var(--text);padding:12px 0;font-size:14px;outline:none;font-family:var(--sans)">
+        <button onclick="handleProductNameInput()" style="background:var(--accent);color:#0d0d0d;border:none;padding:6px 12px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">建檔</button>
+      </div>
+      <div style="font-size:11px;color:var(--dim);margin-top:4px;padding:0 4px">輸入商品名稱後系統會自動查詢規格並建立標籤</div>
+    </div>
+  </div>
+  <div class="search-section">
+    <div class="search-bar">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search-input" placeholder="搜尋物品、分區..."
+        onkeydown="if(event.key==='Enter'||event.keyCode===13){doSearch(this.value)}"
+        onsearch="doSearch(this.value)">
+      <button onclick="doSearch(document.getElementById('search-input').value)"
+        style="background:var(--accent);color:#0d0d0d;border:none;padding:6px 12px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0">搜尋</button>
+    </div>
+  </div>
+  <div style="padding:0 20px 8px;display:flex;gap:8px;overflow-x:auto">
+    <button onclick="openInventory()" class="btn-sm">☰ 全部物品</button>
+  </div>
+  <div class="stats-row" id="stats-row"></div>
+  <div class="section-header">— 近期建檔</div>
+  <div id="recent-list" class="item-list"></div>
+</div>
+</div>
+
+<!-- ═══════════════════ PROCESSING SCREEN ═══════════════════ -->
+<div id="s-processing" class="screen">
+<div class="processing-container">
+  <div class="spinner"></div>
+  <p id="processing-msg">AI 辨識中...</p>
+</div>
+</div>
+
+<!-- ═══════════════════ RESULT SCREEN ═══════════════════ -->
+<div id="s-result" class="screen">
+<div class="header">
+  <button class="back-btn" onclick="cancelResult()">← 返回</button>
+  <span class="header-title">辨識結果</span>
+</div>
+<div class="result-content">
+  <div class="result-image-wrap"><img id="result-img" src="" alt=""></div>
+  <div class="result-card">
+    <div class="result-name-row">
+      <span id="result-name" class="result-name"></span>
+      <span id="result-category" class="category-badge"></span>
+    </div>
+    <p id="result-desc" class="result-desc"></p>
+    <div class="keywords" id="result-keywords"></div>
+  </div>
+  <div id="match-banner" class="match-banner" style="display:none"></div>
+  <div class="location-display">
+    <div class="location-label">收納位置</div>
+    <div class="location-main">
+      <div>
+        <div id="result-zonename" style="font-size:13px;color:var(--muted);font-family:var(--mono)"></div>
+        <div id="result-bag" class="loc-bag"></div>
+      </div>
+    </div>
+  </div>
+  <div class="result-actions">
+    <button class="btn-primary" onclick="confirmItem()">✓ 確認儲存</button>
+    <button class="btn-ghost" onclick="cancelResult()">取消</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════ SEARCH RESULTS SCREEN ═══════════════════ -->
+<div id="s-search" class="screen">
+<div class="header">
+  <button class="back-btn" onclick="showScreen('s-main')">← 返回</button>
+  <span class="header-title" id="search-title">搜尋結果</span>
+</div>
+<div id="search-results" class="item-list padded"></div>
+</div>
+
+<!-- ═══════════════════ INVENTORY SCREEN ═══════════════════ -->
+<div id="s-inventory" class="screen">
+<div class="header">
+  <button class="back-btn" onclick="showScreen('s-main')">← 返回</button>
+  <span class="header-title">全部物品</span>
+</div>
+<div id="inventory-content" class="padded"></div>
+</div>
+
+<!-- ═══════════════════ ITEM DETAIL MODAL ═══════════════════ -->
+<div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal(event)">
+<div class="modal-sheet" onclick="event.stopPropagation()">
+  <div class="modal-drag"></div>
+  <div id="modal-thumb-wrap" style="width:100%;height:140px;border-radius:10px;overflow:hidden;background:var(--surface);margin-bottom:14px">
+    <img id="modal-img" src="" style="width:100%;height:140px;object-fit:cover">
+  </div>
+  <div id="modal-name" class="modal-name"></div>
+  <div id="modal-badge" class="category-badge" style="display:inline-block;margin-bottom:12px"></div>
+  <div id="modal-rows"></div>
+  <div class="modal-actions">
+    <button class="btn-sm" onclick="closeModalPanel()">關閉</button>
+    <button class="btn-danger" id="modal-delete-btn">刪除此物品</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════ BATCH SCREEN ═══════════════════ -->
+<div id="s-batch" class="screen">
+<div class="header">
+  <button class="back-btn" id="batch-back-btn" onclick="cancelBatch()">✕ 取消</button>
+  <span class="header-title" id="batch-title">批次建檔</span>
+</div>
+<div style="padding:16px 20px 80px;flex:1;overflow-y:auto">
+  <!-- Progress bar -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span id="batch-status-text" style="font-size:14px;font-weight:500"></span>
+      <span id="batch-count-badge" style="font-family:var(--mono);font-size:13px;color:var(--accent)"></span>
+    </div>
+    <div style="background:var(--surface);border-radius:4px;height:6px;overflow:hidden">
+      <div id="batch-progress-bar" style="height:100%;background:var(--accent);border-radius:4px;width:0%;transition:width .4s"></div>
+    </div>
+  </div>
+  <!-- Item list with status -->
+  <div id="batch-item-list"></div>
+  <!-- Done summary -->
+  <div id="batch-done-panel" style="display:none">
+    <div style="text-align:center;padding:16px 0 24px">
+      <div style="font-size:36px;margin-bottom:8px" id="batch-done-icon">✓</div>
+      <div id="batch-done-text" style="font-size:16px;font-weight:700;color:var(--text)"></div>
+      <div id="batch-done-sub" style="font-size:13px;color:var(--muted);margin-top:4px"></div>
+    </div>
+    <button class="btn-primary" onclick="showScreen('s-main');refreshMain()">返回主畫面</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════ ZONES SCREEN ═══════════════════ -->
+<div id="s-zones" class="screen">
+<div class="header">
+  <button class="back-btn" onclick="showScreen('s-main')">← 返回</button>
+  <span class="header-title">收納位置管理</span>
+</div>
+<div id="zones-content" class="padded"></div>
+</div>
+
+<!-- ═══════════════════ TOAST ═══════════════════ -->
+<div id="toast" class="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONFIG & STATE
+// ══════════════════════════════════════════════
+const STORAGE_KEY = 'storesmart_cfg';
+const ITEMS_KEY   = 'storesmart_items';
+
+// ══════════════════════════════════════════════
+// LOCATION-BASED STORAGE SYSTEM (V2)
+// ══════════════════════════════════════════════
+const LOCATIONS_KEY = 'storesmart_locations';
+
+const DEFAULT_LOCATIONS = [
+  { id:'loc_1', name:'書房書櫃', bagSizeMl:2000, hints:'文具、電子配件、小物' },
+  { id:'loc_2', name:'車庫層架', bagSizeMl:10000, hints:'工具、五金、戶外' },
+  { id:'loc_3', name:'廚房層架1', bagSizeMl:5000, hints:'餐具，南北貨' },
+];
+
+let LOCATIONS = [];
+
+function loadLocations() {
+  const saved = localStorage.getItem(LOCATIONS_KEY);
+  LOCATIONS = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
+}
+
+function saveLocations() {
+  localStorage.setItem(LOCATIONS_KEY, JSON.stringify(LOCATIONS));
+}
+
+function addLocation(name, bagSizeMl, hints) {
+  const id = 'loc_' + Date.now();
+  LOCATIONS.push({ id, name, bagSizeMl: Number(bagSizeMl), hints });
+  saveLocations();
+  return LOCATIONS[LOCATIONS.length - 1];
+}
+
+function removeLocation(id) {
+  LOCATIONS = LOCATIONS.filter(l => l.id !== id);
+  saveLocations();
+}
+
+// Assign a bag number within a location based on tag overlap + volume
+function assignBag(locationId, featureTags, totalVolumeMl, allItems) {
+  const loc = LOCATIONS.find(l => l.id === locationId);
+  if (!loc) return { locationId, locationName:'未知', bagNum:1 };
+
+  // Group existing items by bag number for this location
+  const locItems = allItems.filter(i => i.locationId === locationId);
+  const bags = {};
+  locItems.forEach(i => {
+    const b = i.bagNum || 1;
+    if (!bags[b]) bags[b] = { usedMl: 0, tags: new Set() };
+    bags[b].usedMl += (i.estimateVolumeMl || 0) * (i.quantity || 1);
+    (i.featureTags || []).forEach(t => bags[b].tags.add(t));
+  });
+
+  const bagNums = Object.keys(bags).map(Number).sort((a,b) => a-b);
+  if (bagNums.length === 0) {
+    return { locationId, locationName: loc.name, bagNum: 1 };
+  }
+
+  // Find a bag with tag overlap AND remaining capacity (search from newest)
+  const newTags = new Set((featureTags || []).map(t => t.toLowerCase()));
+  for (let i = bagNums.length - 1; i >= 0; i--) {
+    const num = bagNums[i];
+    const bag = bags[num];
+    const bagTagsLower = new Set([...bag.tags].map(t => t.toLowerCase()));
+    const overlap = [...newTags].filter(t => bagTagsLower.has(t));
+    if (overlap.length > 0 && bag.usedMl + totalVolumeMl <= loc.bagSizeMl) {
+      return { locationId, locationName: loc.name, bagNum: num };
+    }
+  }
+
+  // No tag overlap or all matching bags full → new bag
+  const maxBag = bagNums.length ? Math.max(...bagNums) : 0;
+  return { locationId, locationName: loc.name, bagNum: maxBag + 1 };
+}
+
+// Build location list string for AI prompt
+function getLocationPromptList() {
+  return LOCATIONS.map(l => {
+    const sizeLabel = l.bagSizeMl >= 1000 ? (l.bagSizeMl/1000)+'L' : l.bagSizeMl+'ml';
+    return `"${l.name}"（${sizeLabel}袋，適合放：${l.hints}）`;
+  }).join('\n');
+}
+
+let cfg = {};
+let db  = null;
+let pendingItem = null;   // item waiting to be confirmed
+let currentImageData = null;
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+function init() {
+  // Wait for Firebase SDK to be available (max 3 seconds)
+  if (typeof firebase === 'undefined') {
+    let waited = 0;
+    const poll = setInterval(() => {
+      waited += 100;
+      if (typeof firebase !== 'undefined' || waited >= 3000) {
+        clearInterval(poll);
+        _init();
+      }
+    }, 100);
+  } else {
+    _init();
+  }
+}
+
+function _init() {
+  loadLocations();
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    cfg = JSON.parse(saved);
+    // Pre-fill setup inputs
+    if (cfg.apiKey)    document.getElementById('inp-apikey').value   = cfg.apiKey;
+    if (cfg.fbProject) document.getElementById('inp-fbproject').value = cfg.fbProject;
+    if (cfg.fbApiKey)  document.getElementById('inp-fbapikey').value  = cfg.fbApiKey;
+    if (cfg.fbCol)     document.getElementById('inp-fbcol').value     = cfg.fbCol;
+
+    if (cfg.apiKey) {
+      initFirebase();
+      showScreen('s-main');
+      refreshMain();
+      return;
+    }
+  }
+  showScreen('s-setup');
+}
+
+function initFirebase() {
+  if (!cfg.fbProject || !cfg.fbApiKey) return;
+  if (typeof firebase === 'undefined') {
+    console.warn('Firebase SDK not loaded, falling back to localStorage only');
+    cfg.localOnly = true;
+    return;
+  }
+  try {
+    const app = firebase.app('storesmart');
+    db = app.firestore();
+  } catch(e) {
+    try {
+      const app = firebase.initializeApp({
+        apiKey:    cfg.fbApiKey,
+        projectId: cfg.fbProject
+      }, 'storesmart');
+      db = app.firestore();
+    } catch(e2) {
+      console.warn('Firebase init failed, falling back to localStorage:', e2);
+      cfg.localOnly = true;
+    }
+  }
+}
+
+// ══════════════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════════════
+function saveSetup() {
+  const apiKey    = document.getElementById('inp-apikey').value.trim();
+  const fbProject = document.getElementById('inp-fbproject').value.trim();
+  const fbApiKey  = document.getElementById('inp-fbapikey').value.trim();
+  const fbCol     = document.getElementById('inp-fbcol').value.trim() || 'items';
+  if (!apiKey) { alert('請輸入 API Key'); return; }
+  cfg = { apiKey, provider: 'claude', fbProject, fbApiKey, fbCol };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
+  initFirebase();
+  showScreen('s-main');
+  refreshMain();
+}
+
+function useLocalOnly() {
+  const apiKey = document.getElementById('inp-apikey').value.trim();
+  if (!apiKey) { alert('請輸入 API Key'); return; }
+  cfg = { apiKey, provider: 'claude', localOnly: true };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
+  showScreen('s-main');
+  refreshMain();
+}
+
+// ══════════════════════════════════════════════
+// SCREEN MANAGEMENT
+// ══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════════════
+// CAMERA / FILE CAPTURE
+// ══════════════════════════════════════════════
+function triggerCamera() {
+  document.getElementById('camera-input').click();
+}
+
+async function handleCapture(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  event.target.value = '';  // reset input
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const raw = e.target.result;
+    currentImageData = await resizeImage(raw, 1024);
+    await identifyItem(currentImageData);
+  };
+  reader.readAsDataURL(file);
+}
+
+async function resizeImage(dataUrl, maxDim) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+      const w = Math.round(img.width * scale);
+      const h = Math.round(img.height * scale);
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.src = dataUrl;
+  });
+}
+
+// ══════════════════════════════════════════════
+// BATCH PROCESSING
+// ══════════════════════════════════════════════
+let batchQueue   = [];  // { file, mode, dataUrl, status, result }
+let batchRunning = false;
+let batchCancelled = false;
+
+async function handleBatchCapture(event) {
+  const files = Array.from(event.target.files || []);
+  event.target.value = '';
+  if (!files.length) return;
+  if (files.length === 1) {
+    // Single file — use normal flow
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      currentImageData = await resizeImage(e.target.result, 1024);
+      await identifyItem(currentImageData);
+    };
+    reader.readAsDataURL(files[0]);
+    return;
+  }
+  await startBatch(files, 'photo');
+}
+
+async function handleBatchLens(event) {
+  const files = Array.from(event.target.files || []);
+  event.target.value = '';
+  if (!files.length) return;
+  if (files.length === 1) {
+    const reader = new FileReader();
+    reader.onload = async (e) => { await parseLensScreenshot(e.target.result); };
+    reader.readAsDataURL(files[0]);
+    return;
+  }
+  await startBatch(files, 'lens');
+}
+
+async function startBatch(files, mode) {
+  batchCancelled = false;
+  batchRunning   = true;
+
+  // Build queue with preview thumbnails
+  batchQueue = files.map((f, i) => ({
+    id: i, file: f, mode,
+    dataUrl: null, status: 'pending',  // pending / processing / done / error
+    result: null, error: null, name: f.name
+  }));
+
+  // Show batch screen
+  showScreen('s-batch');
+  document.getElementById('batch-title').textContent = `批次建檔 ${files.length} 張`;
+  document.getElementById('batch-back-btn').textContent = '✕ 取消';
+  document.getElementById('batch-done-panel').style.display = 'none';
+  renderBatchList();
+
+  // Load thumbnails first
+  await Promise.all(batchQueue.map(item => new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      item.dataUrl = await resizeImage(e.target.result, 600);
+      resolve();
+    };
+    reader.readAsDataURL(item.file);
+  })));
+  renderBatchList();
+
+  // Process sequentially
+  let done = 0, errors = 0;
+  for (const item of batchQueue) {
+    if (batchCancelled) break;
+
+    item.status = 'processing';
+    renderBatchList();
+    updateBatchProgress(done, batchQueue.length, item);
+
+    try {
+      let result;
+      const fullDataUrl = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.readAsDataURL(item.file);
+      });
+
+      if (item.mode === 'lens') {
+        // 直接複用單張 Lens 截圖的完整邏輯
+        // parseLensScreenshot 會設定 currentImageData 並呼叫 processIdentifiedItem
+        // 但批次模式需要直接取得 result，所以提取其核心邏輯
+
+        const { productThumb } = await cropLensScreenshot(fullDataUrl);
+        item.dataUrl = productThumb;
+
+        // 使用和單張模式完全相同的 extractPrompt
+        const base64Full = fullDataUrl.split(',')[1];
+        const extractPrompt = `這是一張 Google 智慧鏡頭或 Google AI 搜尋的截圖。
+請讀取截圖中關於物品的資訊，回應純 JSON（不含其他文字）：
+{
+  "product_name": "完整商品名稱（含品牌和型號，從文字中提取）",
+  "brand": "品牌名稱",
+  "key_features": ["文字中提到的功能特點1", "特點2", "特點3"],
+  "confidence": "high/medium/low"
+}`;
+        let extracted;
+
+        const r = await fetch('https://api.anthropic.com/v1/messages', {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json','x-api-key':cfg.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
+            body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:600,
+              messages:[{ role:'user', content:[
+                { type:'image', source:{ type:'base64', media_type:'image/jpeg', data:base64Full } },
+                { type:'text', text: extractPrompt }
+              ]}]
+            })
+          });
+          if (!r.ok) { const e=await r.json().catch(()=>{}); throw new Error(`Claude ${r.status}: ${e?.error?.message||''}`); }
+          const d = await r.json();
+          extracted = safeParseJSON(d.content[0].text);
+
+        result = await buildItemFromProductName(
+          extracted.product_name || item.file.name,
+          { ...extracted, description_snippets: extracted.key_features },
+          item.dataUrl  // 傳入裁切出的物品照片，讓 AI 辨識顏色
+        );
+        result._useThumb = item.dataUrl;
+      } else {
+        // Normal photo: full AI identification
+        const imageData = await resizeImage(fullDataUrl, 1024);
+        item.dataUrl = imageData;
+        result = await identifyWithClaude(imageData);
+      }
+
+      // Auto-save — batch mode always creates new items (no duplicate merging)
+      const allItems = await loadItems();
+      const suggestedName = result.suggested_location || '';
+      const loc = LOCATIONS.find(l => l.name === suggestedName) || LOCATIONS[0];
+      const volMl = parseInt(result.estimate_volume_ml) || 100;
+      const featureTags = result.feature_tags || [];
+      const bagInfo = assignBag(loc.id, featureTags, volMl, allItems);
+      const now = Date.now();
+      const savedItem = {
+        name:            result.name,
+        name_en:         result.name_en || '',
+        locationId:      bagInfo.locationId,
+        locationName:    bagInfo.locationName,
+        bagNum:          bagInfo.bagNum,
+        estimateVolumeMl:volMl,
+        quantity:        1,
+        featureTags:     featureTags,
+        description:     result.description || '',
+        keywords:        result.keywords || [],
+        id: 'item_' + now + '_' + Math.random().toString(36).slice(2,5),
+        createdAt: now,
+        updatedAt: now,
+        imageData: result._useThumb || item.dataUrl || '',
+      };
+      await saveItem(savedItem);
+
+      item.result = savedItem;
+      item.status = 'done';
+      done++;
+    } catch(err) {
+      item.error = err.message;
+      item.status = 'error';
+      errors++;
+    }
+
+    renderBatchList();
+    updateBatchProgress(done + errors, batchQueue.length, null);
+
+    // Rate limit pause between items
+    if (!batchCancelled) await new Promise(r => setTimeout(r, 600));
+  }
+
+  // Done
+  batchRunning = false;
+  document.getElementById('batch-back-btn').textContent = '← 返回';
+  document.getElementById('batch-done-panel').style.display = 'block';
+  document.getElementById('batch-done-icon').textContent = errors === 0 ? '✓' : '⚠';
+  document.getElementById('batch-done-text').textContent =
+    batchCancelled ? '已取消批次建檔' : `完成！共建檔 ${done} 件`;
+  document.getElementById('batch-done-sub').textContent =
+    errors > 0 ? `失敗 ${errors} 件，可重試` : '所有物品已儲存';
+  updateBatchProgress(batchQueue.length, batchQueue.length, null);
+}
+
+function cancelBatch() {
+  if (batchRunning) {
+    batchCancelled = true;
+    batchRunning = false;
+  }
+  showScreen('s-main');
+  refreshMain();
+}
+
+function updateBatchProgress(done, total, current) {
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('batch-progress-bar').style.width = pct + '%';
+  document.getElementById('batch-count-badge').textContent = `${done} / ${total}`;
+  document.getElementById('batch-status-text').textContent =
+    current ? `辨識中：${current.file.name.slice(0,20)}...` :
+    done === total ? '全部完成' : '準備中...';
+}
+
+function renderBatchList() {
+  const el = document.getElementById('batch-item-list');
+  el.innerHTML = batchQueue.map(item => {
+    const statusIcon =
+      item.status === 'pending'    ? '<span style="color:var(--dim)">○</span>' :
+      item.status === 'processing' ? '<div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0"></div>' :
+      item.status === 'done'       ? '<span style="color:var(--green)">✓</span>' :
+                                     '<span style="color:var(--red)">✗</span>';
+    const name = item.result?.name || item.name || '辨識中...';
+    const meta = item.status === 'done'
+      ? `#${item.result?.bagNum || 1} ${item.result?.locationName || ''}`
+      : item.status === 'error' ? item.error?.slice(0,40) || '失敗'
+      : item.status === 'processing' ? '辨識中...' : '等待中';
+    const thumbSrc = item.dataUrl || '';
+    return `<div class="batch-item ${item.status}">
+      ${thumbSrc
+        ? `<img class="batch-thumb" src="${thumbSrc}">`
+        : `<div class="batch-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:18px">◻</div>`}
+      <div class="batch-info">
+        <div class="batch-name">${name}</div>
+        <div class="batch-meta">${meta}</div>
+      </div>
+      <div class="batch-status-icon">${statusIcon}</div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// GOOGLE LENS SCREENSHOT MODE（智慧解析）
+// ══════════════════════════════════════════════
+async function handleLensScreenshot(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  event.target.value = '';
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    await parseLensScreenshot(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+// 解析 Google Lens 截圖：
+// 1. 裁切上半部（物品照片）作為縮圖
+// 2. 裁切下半部（AI 摘要文字區域）讀取文字
+// 3. 用 AI OCR 提取商品名稱 → 直接建檔，不需再呼叫視覺辨識
+async function parseLensScreenshot(fullDataUrl) {
+  showScreen('s-processing');
+  setProcessingMsg('解析 Google Lens 截圖...');
+
+  try {
+    // Step 1: 裁切出物品照片（上半部 ~62%，扣除狀態列）和文字區（下半部）
+    const { productThumb, textRegion } = await cropLensScreenshot(fullDataUrl);
+    currentImageData = productThumb;  // 物品照片作為縮圖
+
+    setProcessingMsg('讀取 AI 摘要文字...');
+
+    // Step 2: 用 AI 讀取截圖中的文字（OCR + 結構化提取）
+    // 把整張截圖送給 AI，讓它讀出 Google 已識別的商品名稱和摘要
+    const base64Full = fullDataUrl.split(',')[1];
+    const extractPrompt = `這是一張 Google 智慧鏡頭或 Google AI 搜尋的截圖。
+請讀取截圖中關於物品的資訊，回應純 JSON（不含其他文字）：
+{
+  "product_name": "完整商品名稱（含品牌和型號，從文字中提取）",
+  "brand": "品牌名稱",
+  "key_features": ["文字中提到的功能特點1", "特點2", "特點3"],
+  "confidence": "high/medium/low"
+}`;
+
+    let extracted;
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json','x-api-key':cfg.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
+        body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:600,
+          messages:[{ role:'user', content:[
+            { type:'image', source:{ type:'base64', media_type:'image/jpeg', data:base64Full } },
+            { type:'text', text: extractPrompt }
+          ]}]
+        })
+      });
+      if (!resp.ok) throw new Error(`Claude ${resp.status}`);
+      const data = await resp.json();
+      extracted = safeParseJSON(data.content[0].text);
+
+    setProcessingMsg(`找到「${extracted.product_name}」，查詢完整規格...`);
+
+    // Step 3: 用商品名稱 + 物品縮圖查詢完整屬性（含顏色辨識）
+    const item = await buildItemFromProductName(
+      extracted.product_name,
+      { ...extracted, description_snippets: extracted.key_features },
+      productThumb  // 傳入裁切出的物品照片，讓 AI 辨識顏色
+    );
+
+    // 確保縮圖是物品照片（不是整張截圖）
+    if (!item.imageData) item._useThumb = productThumb;
+
+    await processIdentifiedItem(item);
+  } catch(err) {
+    showScreen('s-main');
+    showToast('截圖解析失敗：' + err.message, 'error');
+  }
+}
+
+// 自動偵測 Google Lens 截圖版面格式：
+// 格式A（取景框模式）：中央大圖 + 下方 AI 摘要
+// 格式B（AI 模式）    ：右上角小縮圖 + 全螢幕文字
+async function cropLensScreenshot(dataUrl) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const W = img.width;
+      const H = img.height;
+
+      // 畫到 canvas 以便取樣像素
+      const sc = document.createElement('canvas');
+      sc.width = W; sc.height = H;
+      sc.getContext('2d').drawImage(img, 0, 0);
+      const ctx = sc.getContext('2d');
+
+      // 偵測中央區域（y:15%~60%）的平均亮度
+      // 格式A：中央是物品照片 → 亮度高（>80）
+      // 格式B：中央是深色文字背景 → 亮度低（<60）
+      const cX = Math.round(W * 0.15), cY = Math.round(H * 0.15);
+      const cW = Math.round(W * 0.70), cH = Math.round(H * 0.42);
+      const centerPx = ctx.getImageData(cX, cY, cW, cH).data;
+      let brightness = 0;
+      for (let i = 0; i < centerPx.length; i += 16) {
+        brightness += (centerPx[i] + centerPx[i+1] + centerPx[i+2]) / 3;
+      }
+      brightness /= (centerPx.length / 16);
+
+      let productThumb;
+
+      if (brightness > 70) {
+        // ── 全部模式（取景框模式）：中央有大圖 + 取景框角標
+        // 取景框區域約 y:7%~62%，左右各留少量邊距
+        const pc = document.createElement('canvas');
+        const cropX = Math.round(W * 0.02);
+        const cropY = Math.round(H * 0.07);
+        const cropW = Math.round(W * 0.96);
+        const cropH = Math.round(H * 0.56);
+        pc.width = cropW; pc.height = cropH;
+        pc.getContext('2d').drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+        productThumb = pc.toDataURL('image/jpeg', 0.90);
+      } else {
+        // ── AI 模式：右側有小縮圖，位置約 x:55%~98%, y:16%~36%
+        const tc = document.createElement('canvas');
+        const cropX = Math.round(W * 0.55);
+        const cropY = Math.round(H * 0.16);
+        const cropW = Math.round(W * 0.43);
+        const cropH = Math.round(H * 0.20);
+        tc.width = cropW; tc.height = cropH;
+        tc.getContext('2d').drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+        productThumb = tc.toDataURL('image/jpeg', 0.90);
+      }
+
+      // 文字區：全部模式用 y:70%~100%，AI 模式用 y:35%~92%
+      const textStartPct = brightness > 70 ? 0.70 : 0.35;
+      const textEndPct   = brightness > 70 ? 1.00 : 0.92;
+      const xt = document.createElement('canvas');
+      xt.width  = W;
+      xt.height = Math.round(H * (textEndPct - textStartPct));
+      xt.getContext('2d').drawImage(img,
+        0, Math.round(H * textStartPct),
+        W, xt.height, 0, 0, W, xt.height);
+      const textRegion = xt.toDataURL('image/jpeg', 0.85);
+
+      const layoutType = brightness > 70 ? 'viewfinder' : 'ai-mode';
+      console.log(`[StoreSmart] Lens 截圖偵測: brightness=${Math.round(brightness)}, layout=${layoutType}, size=${W}x${H}`);
+
+      resolve({ productThumb, textRegion, layoutType });
+    };
+    img.src = dataUrl;
+  });
+}
+
+// ══════════════════════════════════════════════
+// PRODUCT NAME TEXT INPUT MODE
+// ══════════════════════════════════════════════
+async function handleProductNameInput() {
+  const input = document.getElementById('product-name-input');
+  const name  = input.value.trim();
+  if (!name) { input.focus(); return; }
+  input.value = '';
+  currentImageData = null;  // no image for text-input mode
+  showScreen('s-processing');
+  setProcessingMsg(`查詢「${name}」商品資訊...`);
+  try {
+    const item = await buildItemFromProductName(name, { product_name: name });
+    await processIdentifiedItem(item);
+  } catch(err) {
+    showScreen('s-main');
+    showToast('查詢失敗：' + err.message, 'error');
+  }
+}
+
+// ── Core: given a product name, build full item profile via Claude prompt
+async function buildItemFromProductName(productName, hints={}, imageDataUrl=null) {
+  const locList = getLocationPromptList();
+  const hasImage = !!imageDataUrl;
+
+  const prompt = `請根據你對「${productName}」這個商品的知識，提供詳細的商品資訊。
+${hasImage ? '附圖是該物品的實際照片，請從圖片判斷顏色/款式。' : ''}
+家中有以下收納位置：
+${locList}
+
+回應純 JSON（不含其他文字）：
+{
+  "name": "完整商品名稱（含品牌型號${hasImage ? '和從圖片辨識出的顏色' : ''}）",
+  "name_en": "English name",
+  "brand": "品牌",
+  "description": "主要規格與特色，50字內",
+  "keywords": ["8~12個搜尋關鍵字，涵蓋品牌/功能/規格/俗稱"],
+  "feature_tags": ["從以下標準標籤中選擇3~5個：書寫,筆類,墨水,鉛芯,修正,紙類,記錄,固定,裝訂,辦公,充電,USB,電源,電池,傳輸線,音頻,耳機,喇叭,藍牙,無線,手機配件,電腦配件,3C,數位,相機,儲存,切割,刀具,鍋具,餐具,烹飪,食材,調味,保鮮,清潔,洗滌,收納,照明,工具,螺絲,五金,測量,膠帶,黏貼,繪畫,手工,縫紉,護理,醫藥,防護,戶外,運動,園藝,汽車,衣物,鞋類,包袋"],
+  "suggested_location": "建議的收納位置名稱（必須是上方列出的其中一個）",
+  "estimate_volume_ml": 估計單件收納體積（毫升整數）
+}`;
+
+  // Build message content: image (if available) + text
+  const content = [];
+  if (hasImage) {
+    const base64 = imageDataUrl.split(',')[1];
+    content.push({ type:'image', source:{ type:'base64', media_type:'image/jpeg', data:base64 } });
+  }
+  content.push({ type:'text', text:prompt });
+
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json','x-api-key':cfg.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
+    body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:800,
+      messages:[{ role:'user', content }]
+    })
+  });
+  if (!resp.ok) { const e=await resp.json().catch(()=>{}); throw new Error(`Claude ${resp.status}: ${e?.error?.message||''}`); }
+  const data = await resp.json();
+  const text = data.content[0].text;
+  return safeParseJSON(text);
+}
+
+async function identifyItem(imageData) {
+  showScreen('s-processing');
+  try {
+    setProcessingMsg('AI 辨識物品中...');
+    const item = await identifyWithClaude(imageData);
+    await processIdentifiedItem(item);
+  } catch(err) {
+    showScreen('s-main');
+    const msg = err.message || '';
+    if (msg.includes('401') || msg.includes('invalid x-api-key') || msg.includes('invalid_api_key')) {
+      showToast('API Key 無效，請重新設定', 'error');
+      setTimeout(() => showScreen('s-setup'), 1500);
+    } else {
+      showToast('辨識失敗：' + msg, 'error');
+    }
+  }
+}
+
+// ── Prompt A: 模擬電商分類（Claude prompt）
+// ── 強健的 JSON 解析：處理 AI 回傳的特殊字符（& 4&1 等）
+function safeParseJSON(text) {
+  // 清理 markdown code fence
+  text = text.replace(/^```json\s*/i, '').replace(/```\s*$/,'').trim();
+
+  // 先嘗試直接解析
+  try { return JSON.parse(text); } catch(e1) {}
+
+  // 擷取第一個 {...} 區塊
+  const m = text.match(/\{[\s\S]*\}/);
+  if (!m) throw new Error('回應中找不到 JSON 格式');
+  let raw = m[0];
+
+  // 修復常見問題：
+  // 1. & 符號（JSON 合法，但 AI 有時會誤放 HTML entity &amp;）
+  raw = raw.replace(/&amp;/g, '&');
+
+  // 2. 字串值中的未跳脫換行符（\n → \\n）
+  raw = raw.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, (match) => {
+    return match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+  });
+
+  // 3. 試著用 JSON.parse 寬鬆模式（eval 僅在確定是物件字面量時使用）
+  try { return JSON.parse(raw); } catch(e2) {}
+
+  // 4. 逐欄位提取關鍵字段（最後手段）
+  const extract = (key) => {
+    const re = new RegExp(`"${key}"\\s*:\\s*"([^"]*)"`, 'i');
+    const r = raw.match(re);
+    return r ? r[1] : '';
+  };
+  const extractArr = (key) => {
+    const re = new RegExp(`"${key}"\\s*:\\s*\\[([^\\]]*)\\]`, 'i');
+    const r = raw.match(re);
+    if (!r) return [];
+    return r[1].match(/"([^"]*)"/g)?.map(s => s.replace(/"/g,'')) || [];
+  };
+  return {
+    name:              extract('name') || extract('product_name') || '未知商品',
+    name_en:           extract('name_en'),
+    brand:             extract('brand'),
+    description:       extract('description') || extract('summary_text'),
+    keywords:          extractArr('keywords'),
+    feature_tags:      extractArr('feature_tags'),
+    key_features:      extractArr('key_features'),
+    suggested_location:extract('suggested_location') || '',
+    estimate_volume_ml:parseInt(extract('estimate_volume_ml')) || 100,
+    confidence:        extract('confidence') || 'medium',
+  };
+}
+function buildPrompt() {
+  const locList = getLocationPromptList();
+  return `你是智慧收納系統的物品辨識模組。請辨識圖片中的物品。
+
+家中有以下收納位置：
+${locList}
+
+請根據物品特性，建議最適合的收納位置，並估算物品的收納體積。
+回應純 JSON 格式（不要有任何其他文字）：
+{
+  "name": "完整商品中文名稱（含品牌型號和顏色/款式，例：Sony WF-1000XM3 真無線降噪耳機 黑色）",
+  "name_en": "English product name",
+  "brand": "品牌名稱",
+  "description": "30字內描述，包含主要規格或特色",
+  "keywords": ["8~12個搜尋關鍵字，包含品牌、型號、功能、材質、規格、顏色"],
+  "feature_tags": ["從以下標準標籤中選擇3~5個最相關的：書寫,筆類,墨水,鉛芯,修正,紙類,記錄,固定,裝訂,辦公,充電,USB,電源,電池,傳輸線,音頻,耳機,喇叭,藍牙,無線,手機配件,電腦配件,3C,數位,相機,儲存,切割,刀具,鍋具,餐具,烹飪,食材,調味,保鮮,清潔,洗滌,收納,照明,工具,螺絲,五金,測量,膠帶,黏貼,繪畫,手工,縫紉,護理,醫藥,防護,戶外,運動,園藝,汽車,衣物,鞋類,包袋。如果都不適合可自訂，但盡量使用標準標籤"],
+  "suggested_location": "建議的收納位置名稱（必須是上方列出的其中一個）",
+  "estimate_volume_ml": 估計單件收納體積（毫升整數，例如一支筆約25，一個充電器約180，一副耳機含充電盒約200）
+}`;
+}
+
+async function identifyWithClaude(imageData) {
+  const base64 = imageData.split(',')[1];
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': cfg.apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 800,
+      messages: [{ role:'user', content:[
+        { type:'image', source:{ type:'base64', media_type:'image/jpeg', data:base64 } },
+        { type:'text', text: buildPrompt() }
+      ]}]
+    })
+  });
+  if (!resp.ok) { const e=await resp.json().catch(()=>{}); throw new Error(`Claude API ${resp.status}: ${e?.error?.message||''}`); }
+  const data = await resp.json();
+  const text = data.content[0].text;
+  return safeParseJSON(text);
+}
+
+async function processIdentifiedItem(item) {
+  setProcessingMsg('指派收納位置...');
+  const allItems = await loadItems();
+
+  // Check for duplicate (fuzzy match by name)
+  const match = findDuplicate(item.name, item.keywords, allItems);
+
+  // Resolve location from AI suggestion
+  const suggestedName = item.suggested_location || '';
+  const loc = LOCATIONS.find(l => l.name === suggestedName) || LOCATIONS[0];
+  const volMl = parseInt(item.estimate_volume_ml) || 100;
+  const featureTags = item.feature_tags || [];
+  const qty = 1; // default, user can change before confirm
+
+  // Assign bag number based on tag overlap + volume
+  const bagInfo = assignBag(loc.id, featureTags, volMl * qty, allItems);
+
+  pendingItem = {
+    ...item,
+    ...bagInfo,
+    featureTags,
+    estimateVolumeMl: volMl,
+    quantity: qty,
+    imageData: currentImageData,
+    isUpdate: !!match,
+    matchedId: match ? match.id : null
+  };
+
+  // Show result screen
+  document.getElementById('result-img').src = pendingItem._useThumb || currentImageData || '';
+  document.getElementById('result-name').textContent = item.name;
+  document.getElementById('result-category').textContent = item.description || '';
+  document.getElementById('result-desc').textContent = '';
+
+  const kw = document.getElementById('result-keywords');
+  kw.innerHTML = '';
+
+  // Feature tags (highlighted)
+  if (featureTags.length) {
+    featureTags.forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'keyword-tag';
+      span.style.cssText = 'background:var(--blue-bg);color:var(--blue);border-color:rgba(59,130,246,.3)';
+      span.textContent = t;
+      kw.appendChild(span);
+    });
+  }
+
+  // Volume badge
+  const volLabel = volMl >= 1000 ? (volMl/1000).toFixed(1)+'L' : volMl+'ml';
+  const volBadge = document.createElement('span');
+  volBadge.className = 'keyword-tag';
+  volBadge.style.cssText = 'background:var(--accent-bg);color:var(--accent);border-color:var(--accent)';
+  volBadge.textContent = '單件 ≈ ' + volLabel;
+  kw.appendChild(volBadge);
+
+  // Quantity input row
+  const qtyRow = document.createElement('div');
+  qtyRow.style.cssText = 'display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px';
+  qtyRow.innerHTML = `
+    <span style="font-size:13px;color:var(--muted)">數量</span>
+    <button onclick="adjustQty(-1)" style="width:30px;height:30px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:16px;cursor:pointer">−</button>
+    <span id="qty-display" style="font-family:var(--mono);font-size:18px;font-weight:700;min-width:28px;text-align:center">1</span>
+    <button onclick="adjustQty(1)" style="width:30px;height:30px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:16px;cursor:pointer">+</button>
+    <span id="qty-total-vol" style="font-size:12px;color:var(--muted);margin-left:auto;font-family:var(--mono)">= ${volLabel}</span>
+  `;
+  kw.appendChild(qtyRow);
+
+  // Search keywords (smaller)
+  if (item.keywords?.length) {
+    const kwDiv = document.createElement('div');
+    kwDiv.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;margin-top:8px';
+    (item.keywords || []).forEach(k => {
+      const span = document.createElement('span');
+      span.className = 'keyword-tag';
+      span.textContent = k;
+      kwDiv.appendChild(span);
+    });
+    kw.appendChild(kwDiv);
+  }
+
+  const banner = document.getElementById('match-banner');
+  if (match) {
+    banner.style.display = 'block';
+    banner.innerHTML = `<div class="match-banner-title" style="color:var(--accent)">⚠ 找到類似物品</div>
+      <div class="match-banner-sub" style="margin-bottom:10px">「${match.name}」已在 <strong>#${match.bagNum} ${match.locationName}</strong></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-sm" style="flex:1;background:var(--green-bg);border-color:var(--green);color:var(--green)" onclick="chooseDuplicateAction('addQty')">同一物品 +1</button>
+        <button class="btn-sm" style="flex:1" onclick="chooseDuplicateAction('newItem')">不同物品（另外建檔）</button>
+      </div>`;
+    // Store match info but don't auto-decide
+    pendingItem._matchRef = match;
+    pendingItem.isUpdate = false;  // default: new item, user can switch
+  } else {
+    banner.style.display = 'none';
+  }
+
+  document.getElementById('result-zonename').textContent = pendingItem.locationName;
+  document.getElementById('result-bag').textContent      = '#' + pendingItem.bagNum;
+
+  showScreen('s-result');
+}
+
+function adjustQty(delta) {
+  if (!pendingItem) return;
+  pendingItem.quantity = Math.max(1, (pendingItem.quantity||1) + delta);
+  document.getElementById('qty-display').textContent = pendingItem.quantity;
+  const totalVol = pendingItem.estimateVolumeMl * pendingItem.quantity;
+  const label = totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml';
+  document.getElementById('qty-total-vol').textContent = '= ' + label;
+
+  // Re-calculate bag assignment with new quantity
+  loadItems().then(allItems => {
+    const featureTags = pendingItem.featureTags || [];
+    const loc = LOCATIONS.find(l => l.id === pendingItem.locationId) || LOCATIONS[0];
+    const bagInfo = assignBag(loc.id, featureTags, totalVol, allItems);
+    pendingItem.locationId   = bagInfo.locationId;
+    pendingItem.locationName = bagInfo.locationName;
+    pendingItem.bagNum       = bagInfo.bagNum;
+    document.getElementById('result-zonename').textContent = bagInfo.locationName;
+    document.getElementById('result-bag').textContent      = '#' + bagInfo.bagNum;
+  });
+}
+
+function chooseDuplicateAction(action) {
+  if (!pendingItem || !pendingItem._matchRef) return;
+  const match = pendingItem._matchRef;
+  const banner = document.getElementById('match-banner');
+
+  if (action === 'addQty') {
+    // Same item → update existing: go back to original location, increment quantity
+    pendingItem.isUpdate     = true;
+    pendingItem.matchedId    = match.id;
+    pendingItem.locationId   = match.locationId;
+    pendingItem.locationName = match.locationName;
+    pendingItem.bagNum       = match.bagNum;
+    pendingItem.quantity     = (match.quantity || 1) + 1;
+    pendingItem.name         = match.name; // keep original name
+    pendingItem.featureTags  = match.featureTags || pendingItem.featureTags; // keep original tags
+
+    document.getElementById('qty-display').textContent = pendingItem.quantity;
+    const totalVol = pendingItem.estimateVolumeMl * pendingItem.quantity;
+    const label = totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml';
+    document.getElementById('qty-total-vol').textContent = '= ' + label;
+    document.getElementById('result-zonename').textContent = match.locationName;
+    document.getElementById('result-bag').textContent      = '#' + match.bagNum;
+
+    banner.innerHTML = `<div class="match-banner-title" style="color:var(--green)">✓ 同一物品，數量 +1</div>
+      <div class="match-banner-sub">將更新「${match.name}」的數量為 ${pendingItem.quantity}</div>`;
+  } else {
+    // Different item → new entry (e.g. different color)
+    pendingItem.isUpdate  = false;
+    pendingItem.matchedId = null;
+    pendingItem._matchRef = null;
+
+    banner.innerHTML = `<div class="match-banner-title" style="color:var(--blue)">→ 另外建檔為不同物品</div>
+      <div class="match-banner-sub">將以「${pendingItem.name}」建立新的收納紀錄</div>`;
+  }
+}
+
+// ══════════════════════════════════════════════
+// DUPLICATE DETECTION
+// ══════════════════════════════════════════════
+function findDuplicate(name, keywords, allItems) {
+  const normName = name.toLowerCase().replace(/\s/g,'');
+  for (const item of allItems) {
+    const normItem = (item.name||'').toLowerCase().replace(/\s/g,'');
+    // Exact or near-exact name match
+    if (normItem === normName) return item;
+    // Substring match — only when the shorter string is ≥60% of the longer one
+    // (catches "Sony XM5 耳機" vs "Sony WF-1000XM5 真無線降噪耳機",
+    //  but NOT "uni Jetstream" vs "uni α-gel SWITCH")
+    if (normItem.length >= 6 && normName.length >= 6) {
+      const shorter = Math.min(normItem.length, normName.length);
+      const longer  = Math.max(normItem.length, normName.length);
+      if (shorter / longer >= 0.6) {
+        if (normItem.includes(normName) || normName.includes(normItem)) return item;
+      }
+    }
+    // Keyword overlap — require ≥4 matches AND ≥40% of query keywords
+    const itemKw = (item.keywords || []).map(k=>k.toLowerCase());
+    const qKw    = (keywords || []).map(k=>k.toLowerCase());
+    const overlap = qKw.filter(k => itemKw.includes(k));
+    if (overlap.length >= 4 && qKw.length > 0 && overlap.length / qKw.length >= 0.4) return item;
+  }
+  return null;
+}
+
+// ══════════════════════════════════════════════
+// CONFIRM / CANCEL
+// ══════════════════════════════════════════════
+async function confirmItem() {
+  if (!pendingItem) return;
+  showScreen('s-processing');
+  setProcessingMsg('儲存中...');
+  try {
+    const now = Date.now();
+    const item = {
+      name:            pendingItem.name,
+      name_en:         pendingItem.name_en || '',
+      locationId:      pendingItem.locationId,
+      locationName:    pendingItem.locationName,
+      bagNum:          pendingItem.bagNum,
+      estimateVolumeMl:pendingItem.estimateVolumeMl || 100,
+      quantity:        pendingItem.quantity || 1,
+      featureTags:     pendingItem.featureTags || [],
+      description:     pendingItem.description || '',
+      keywords:        pendingItem.keywords    || [],
+      imageData:       pendingItem._useThumb || pendingItem.imageData || '',
+      updatedAt:       now
+    };
+
+    if (pendingItem.isUpdate && pendingItem.matchedId) {
+      item.id = pendingItem.matchedId;
+      item.createdAt = pendingItem._matchRef?.createdAt || pendingItem.createdAt || now;
+      // Keep original image if updating quantity
+      if (pendingItem._matchRef?.imageData && !item.imageData) {
+        item.imageData = pendingItem._matchRef.imageData;
+      }
+      await updateItem(item);
+      showToast('已更新：#' + item.bagNum + ' ' + item.locationName);
+    } else {
+      item.id        = 'item_' + now + '_' + Math.random().toString(36).slice(2,7);
+      item.createdAt = now;
+      await saveItem(item);
+      showToast('已儲存到 #' + item.bagNum + ' ' + item.locationName);
+    }
+    pendingItem = null;
+    currentImageData = null;
+    showScreen('s-main');
+    refreshMain();
+  } catch(err) {
+    showScreen('s-result');
+    showToast('儲存失敗：' + err.message, 'error');
+  }
+}
+
+function cancelResult() {
+  pendingItem = null;
+  currentImageData = null;
+  showScreen('s-main');
+}
+
+// ══════════════════════════════════════════════
+// DATA LAYER (Firestore + localStorage fallback)
+// ══════════════════════════════════════════════
+async function loadItems() {
+  if (db && !cfg.localOnly) {
+    try {
+      const snap = await db.collection(cfg.fbCol||'items').orderBy('createdAt','desc').get();
+      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch(e) { console.warn('Firestore read failed, using local', e); }
+  }
+  return JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');
+}
+
+async function saveItem(item) {
+  if (db && !cfg.localOnly) {
+    await db.collection(cfg.fbCol||'items').doc(item.id).set(item);
+  }
+  const items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');
+  items.unshift(item);
+  localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+}
+
+async function updateItem(item) {
+  if (db && !cfg.localOnly) {
+    await db.collection(cfg.fbCol||'items').doc(item.id).set(item, { merge:true });
+  }
+  let items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');
+  const idx = items.findIndex(i => i.id === item.id);
+  if (idx >= 0) items[idx] = item;
+  else items.unshift(item);
+  localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+}
+
+async function deleteItem(id) {
+  if (db && !cfg.localOnly) {
+    await db.collection(cfg.fbCol||'items').doc(id).delete();
+  }
+  let items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');
+  items = items.filter(i => i.id !== id);
+  localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+}
+
+// ══════════════════════════════════════════════
+// REFRESH MAIN SCREEN
+// ══════════════════════════════════════════════
+async function refreshMain() {
+  const items = await loadItems();
+  renderStats(items);
+  renderRecent(items.slice(0,6));
+}
+
+function renderStats(items) {
+  const locs = [...new Set(items.map(i=>i.locationName).filter(Boolean))];
+  const bagCount = [...new Set(items.map(i=>(i.locationId||'')+'_'+(i.bagNum||1)))].length;
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card"><div class="stat-num">${items.length}</div><div class="stat-label">物品總數</div></div>
+    <div class="stat-card"><div class="stat-num">${bagCount}</div><div class="stat-label">收納袋</div></div>
+    <div class="stat-card"><div class="stat-num">${locs.length}</div><div class="stat-label">收納位置</div></div>`;
+}
+
+function renderRecent(items) {
+  const el = document.getElementById('recent-list');
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">◻</div>尚無建檔物品<br>拍照新增第一件物品</div>`;
+    return;
+  }
+  el.innerHTML = items.map(item => itemRowHTML(item)).join('');
+}
+
+function itemRowHTML(item) {
+  const thumb = item.imageData
+    ? `<img class="item-thumb" src="${item.imageData}" loading="lazy">`
+    : `<div class="item-thumb-placeholder">◻</div>`;
+  const qtyBadge = (item.quantity||1) > 1 ? `<span style="font-size:10px;color:var(--accent);font-family:var(--mono)">x${item.quantity}</span>` : '';
+  return `<div class="item-row" onclick="openItemDetail('${item.id}')">
+    ${thumb}
+    <div class="item-info">
+      <div class="item-name">${item.name} ${qtyBadge}</div>
+      <div class="item-meta">
+        <span class="item-loc">#${item.bagNum||1}</span>
+        <span class="item-cat">${item.locationName||''}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════
+// 主畫面搜尋：Enter / 按鈕才觸發
+async function doSearch(value) {
+  if (!value.trim()) return;
+  await handleSearch(value);
+}
+
+// 搜尋邏輯（共用）
+let searchTimeout = null;
+async function handleSearch(value) {
+  if (!value.trim()) return;
+  const items = await loadItems();
+    const q = value.toLowerCase();
+    const results = items.filter(item =>
+      (item.name||'').toLowerCase().includes(q) ||
+      (item.name_en||'').toLowerCase().includes(q) ||
+      (item.locationName||'').toLowerCase().includes(q) ||
+      (item.description||'').toLowerCase().includes(q) ||
+      (item.keywords||[]).some(k => k.toLowerCase().includes(q))
+    );
+    document.getElementById('search-title').textContent = `搜尋「${value}」（${results.length}筆）`;
+    const el = document.getElementById('search-results');
+    if (!results.length) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-icon">⌕</div>找不到「${value}」相關物品</div>`;
+    } else {
+      el.innerHTML = results.map(itemRowHTML).join('');
+    }
+    showScreen('s-search');
+}
+
+// ══════════════════════════════════════════════
+// INVENTORY
+// ══════════════════════════════════════════════
+async function openInventory() {
+  const items = await loadItems();
+  if (!items.length) {
+    document.getElementById('inventory-content').innerHTML =
+      `<div class="empty-state"><div class="empty-icon">◻</div>尚無建檔物品</div>`;
+    showScreen('s-inventory');
+    return;
+  }
+
+  // Group by location → bag
+  const locGroups = {};
+  items.forEach(item => {
+    const locName = item.locationName || '未分類';
+    const locId = item.locationId || 'unknown';
+    if (!locGroups[locId]) locGroups[locId] = { name: locName, bags:{} };
+    const b = item.bagNum || 1;
+    if (!locGroups[locId].bags[b]) locGroups[locId].bags[b] = { items:[], usedMl:0 };
+    locGroups[locId].bags[b].items.push(item);
+    locGroups[locId].bags[b].usedMl += (item.estimateVolumeMl || 0) * (item.quantity || 1);
+  });
+
+  let html = '';
+  Object.entries(locGroups).forEach(([locId, locData]) => {
+    const loc = LOCATIONS.find(l => l.id === locId);
+    const bagSizeMl = loc ? loc.bagSizeMl : 5000;
+    const sizeLabel = bagSizeMl >= 1000 ? (bagSizeMl/1000)+'L' : bagSizeMl+'ml';
+    const total = Object.values(locData.bags).reduce((s,b) => s + b.items.length, 0);
+    html += `<div class="zone-group">
+      <div class="zone-header">
+        <span class="zone-code" style="font-size:16px;width:auto">📍</span>
+        <span class="zone-name">${locData.name}</span>
+        <span class="zone-count">${total} 件 · ${sizeLabel}/袋</span>
+      </div>`;
+    Object.entries(locData.bags).sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([bagNum, bagData]) => {
+      const pct = Math.min(100, Math.round(bagData.usedMl / bagSizeMl * 100));
+      const usedLabel = bagData.usedMl >= 1000 ? (bagData.usedMl/1000).toFixed(1)+'L' : bagData.usedMl+'ml';
+      const barColor = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--accent)' : 'var(--green)';
+      html += `<div class="bag-group">
+        <div class="bag-header" style="display:flex;align-items:center;gap:8px">
+          <span>袋 <span>#${bagNum}</span> · ${bagData.items.length} 件</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:${barColor};border-radius:2px"></div>
+          </div>
+          <span style="font-size:10px;color:var(--muted)">${usedLabel}/${sizeLabel}</span>
+        </div>
+        ${bagData.items.map(itemRowHTML).join('')}
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  document.getElementById('inventory-content').innerHTML = html;
+  showScreen('s-inventory');
+}
+
+// ══════════════════════════════════════════════
+// ITEM DETAIL MODAL
+// ══════════════════════════════════════════════
+async function openItemDetail(id) {
+  const items = await loadItems();
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+
+  document.getElementById('modal-img').src = item.imageData || '';
+  document.getElementById('modal-name').textContent = item.name;
+  document.getElementById('modal-badge').textContent = item.locationName || '';
+
+  const volLabel = (item.estimateVolumeMl||0) >= 1000 ? ((item.estimateVolumeMl||0)/1000).toFixed(1)+'L' : (item.estimateVolumeMl||0)+'ml';
+  const qty = item.quantity || 1;
+  const totalVol = (item.estimateVolumeMl||0) * qty;
+  const totalLabel = totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml';
+  const rows = [
+    ['收納位置', item.locationName],
+    ['收納袋',   '#' + (item.bagNum||1)],
+    ['數量',     qty > 1 ? qty + ' 件' : '1 件'],
+    ['預估體積', qty > 1 ? `${volLabel}/件 × ${qty} = ${totalLabel}` : volLabel],
+    ['特徵標籤', (item.featureTags||[]).join('、') || '-'],
+    ['描述',     item.description],
+    ['關鍵字',   (item.keywords||[]).join('、')]
+  ];
+  document.getElementById('modal-rows').innerHTML = rows.map(([k,v]) =>
+    `<div class="modal-row"><span class="modal-key">${k}</span><span class="modal-val">${v||'-'}</span></div>`
+  ).join('');
+
+  document.getElementById('modal-delete-btn').onclick = () => confirmDelete(item.id, item.name);
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalPanel();
+}
+function closeModalPanel() {
+  document.getElementById('modal-overlay').classList.add('hidden');
+}
+
+async function confirmDelete(id, name) {
+  if (!confirm(`確定要刪除「${name}」的建檔資料嗎？`)) return;
+  closeModalPanel();
+  await deleteItem(id);
+  showToast(name + ' 已刪除');
+  refreshMain();
+  // Refresh current screen
+  const inv = document.getElementById('s-inventory');
+  if (inv.classList.contains('active')) openInventory();
+}
+
+// ══════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════
+function setProcessingMsg(msg) {
+  document.getElementById('processing-msg').textContent = msg;
+}
+
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = type === 'error' ? 'var(--red)' : 'var(--green)';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ══════════════════════════════════════════════
+// LOCATIONS MANAGEMENT SCREEN
+// ══════════════════════════════════════════════
+function openLocations() {
+  const inputStyle = 'width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:6px;font-size:14px;margin-bottom:8px';
+  const labelStyle = 'display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-family:var(--mono)';
+
+  let html = `<div style="margin-bottom:16px;font-size:13px;color:var(--muted)">
+    定義家中的收納位置，AI 辨識物品後會建議最適合的位置。<br>
+    <span style="color:var(--accent)">目前共 ${LOCATIONS.length} 個收納位置</span>
+  </div>`;
+
+  LOCATIONS.forEach((loc) => {
+    const sizeLabel = loc.bagSizeMl >= 1000 ? (loc.bagSizeMl/1000)+'L' : loc.bagSizeMl+'ml';
+    html += `<div id="loc-card-${loc.id}" class="zone-group" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px">
+      <label style="${labelStyle}">位置名稱</label>
+      <input type="text" id="edit-name-${loc.id}" value="${loc.name}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')">
+      <label style="${labelStyle}">袋子容量 (ml) — 目前 ${sizeLabel}</label>
+      <input type="number" id="edit-size-${loc.id}" value="${loc.bagSizeMl}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')">
+      <label style="${labelStyle}">提示詞</label>
+      <input type="text" id="edit-hints-${loc.id}" value="${loc.hints}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')">
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button id="save-btn-${loc.id}" class="btn-sm" style="display:none;background:var(--accent-bg);border-color:var(--accent);color:var(--accent)" onclick="doSaveLocation('${loc.id}')">儲存變更</button>
+        <button class="btn-danger" style="font-size:11px;padding:4px 10px" onclick="doRemoveLocation('${loc.id}')">刪除</button>
+      </div>
+    </div>`;
+  });
+
+  html += `
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:16px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--accent)">+ 新增收納位置</div>
+    <label style="${labelStyle}">位置名稱</label>
+    <input type="text" id="new-loc-name" placeholder="例：客廳沙發櫃" style="${inputStyle}">
+    <label style="${labelStyle}">袋子容量 (ml)</label>
+    <input type="number" id="new-loc-size" placeholder="2000" value="5000" style="${inputStyle}">
+    <label style="${labelStyle}">提示詞（告訴 AI 這裡通常放什麼）</label>
+    <input type="text" id="new-loc-hints" placeholder="例：遙控器、藥品、日用小物" style="${inputStyle}">
+    <button class="btn-primary" style="margin-top:0" onclick="doAddLocation()">新增</button>
+  </div>`;
+
+  document.getElementById('zones-content').innerHTML = html;
+  showScreen('s-zones');
+}
+
+function markLocChanged(id) {
+  const btn = document.getElementById('save-btn-' + id);
+  if (btn) btn.style.display = 'inline-block';
+}
+
+async function doSaveLocation(id) {
+  const loc = LOCATIONS.find(l => l.id === id);
+  if (!loc) return;
+
+  const newName  = document.getElementById('edit-name-' + id).value.trim();
+  const newSize  = parseInt(document.getElementById('edit-size-' + id).value) || loc.bagSizeMl;
+  const newHints = document.getElementById('edit-hints-' + id).value.trim();
+
+  if (!newName) { alert('位置名稱不能為空'); return; }
+
+  const oldName = loc.name;
+  loc.name      = newName;
+  loc.bagSizeMl = newSize;
+  loc.hints     = newHints;
+  saveLocations();
+
+  // If name changed, update all existing items that reference this location
+  if (oldName !== newName) {
+    const items = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
+    let updated = 0;
+    items.forEach(item => {
+      if (item.locationId === id) {
+        item.locationName = newName;
+        updated++;
+      }
+    });
+    if (updated > 0) {
+      localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+      // Also update Firestore if connected
+      if (db && !cfg.localOnly) {
+        for (const item of items.filter(i => i.locationId === id)) {
+          try { await db.collection(cfg.fbCol||'items').doc(item.id).update({ locationName: newName }); } catch(e) {}
+        }
+      }
+    }
+    showToast(`已更新「${newName}」，${updated} 件物品同步更新`);
+  } else {
+    showToast('已儲存變更');
+  }
+
+  openLocations();
+}
+
+function doAddLocation() {
+  const name = document.getElementById('new-loc-name').value.trim();
+  const size = parseInt(document.getElementById('new-loc-size').value) || 5000;
+  const hints = document.getElementById('new-loc-hints').value.trim();
+  if (!name) { alert('請輸入位置名稱'); return; }
+  addLocation(name, size, hints);
+  showToast('已新增：' + name);
+  openLocations();
+}
+
+function doRemoveLocation(id) {
+  const loc = LOCATIONS.find(l => l.id === id);
+  if (!loc) return;
+  if (!confirm(`確定要刪除「${loc.name}」嗎？已建檔的物品不會被刪除。`)) return;
+  removeLocation(id);
+  showToast('已刪除：' + loc.name);
+  openLocations();
+}
+
+// START
+// ══════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>

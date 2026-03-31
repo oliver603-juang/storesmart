@@ -1,0 +1,13 @@
+{
+  "name": "StoreSmart 智慧收納",
+  "short_name": "StoreSmart",
+  "description": "AI 驅動的智慧收納系統 — 拍照建檔、自動分類、收納位置管理",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#f59e0b",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
