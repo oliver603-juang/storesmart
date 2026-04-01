@@ -14,22 +14,13 @@
 <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-app-compat.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-firestore-compat.min.js"></script>
 <style>
-:root {
-  --bg:#0d0d0d; --surface:#161616; --card:#1e1e1e; --border:#2a2a2a;
-  --accent:#f59e0b; --accent-bg:rgba(245,158,11,0.12); --accent-dim:rgba(245,158,11,0.06);
-  --text:#e8e8e8; --muted:#777; --dim:#444;
-  --green:#22c55e; --green-bg:rgba(34,197,94,0.12);
-  --blue:#3b82f6; --blue-bg:rgba(59,130,246,0.12);
-  --red:#ef4444; --red-bg:rgba(239,68,68,0.12);
-  --mono:'JetBrains Mono',monospace;
-  --sans:'Noto Sans TC',sans-serif;
-}
+:root { --bg:#0d0d0d; --surface:#161616; --card:#1e1e1e; --border:#2a2a2a; --accent:#f59e0b; --accent-bg:rgba(245,158,11,0.12); --accent-dim:rgba(245,158,11,0.06); --text:#e8e8e8; --muted:#777; --dim:#444; --green:#22c55e; --green-bg:rgba(34,197,94,0.12); --blue:#3b82f6; --blue-bg:rgba(59,130,246,0.12); --red:#ef4444; --red-bg:rgba(239,68,68,0.12); --mono:'JetBrains Mono',monospace; --sans:'Noto Sans TC',sans-serif; }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;font-size:15px}
 .screen{display:none;flex-direction:column;min-height:100vh}
 .screen.active{display:flex}
 
-/* HEADER */
+/* HEADER & BUTTONS */
 .header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
 .header-title{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--accent);letter-spacing:0.05em}
 .back-btn{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:4px 0;font-family:var(--sans)}
@@ -37,8 +28,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .header-actions{display:flex;gap:8px}
 .icon-btn{background:none;border:1px solid var(--border);color:var(--muted);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
 .icon-btn:hover{border-color:var(--accent);color:var(--accent)}
-
-/* BUTTONS */
 .btn-primary{width:100%;background:var(--accent);color:#0d0d0d;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--sans);margin-top:8px;transition:opacity .15s}
 .btn-primary:hover{opacity:.9}
 .btn-primary:active{opacity:.7}
@@ -162,12 +151,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .keywords{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
 .keyword-tag{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:11px;padding:3px 8px;border-radius:4px;font-family:var(--mono)}
 
-
+/* BATCH SELECT / CHECKBOX */
+.item-checkbox { display:none; margin-right:10px; width:20px; height:20px; -webkit-appearance:none; appearance:none; background:var(--surface); border:2px solid var(--dim); border-radius:4px; pointer-events:none; flex-shrink:0; cursor:pointer; transition:background 0.2s, border-color 0.2s; }
+.item-checkbox:checked { background-color:var(--accent); border-color:var(--accent); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d0d0d' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"); background-size:80%; background-position:center; background-repeat:no-repeat; }
+.select-mode .item-checkbox { display:inline-block; }
+.select-mode .item-row:has(.item-checkbox:checked) { border-color:var(--accent); background:var(--accent-dim); }
+.batch-action-bar { position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--border); padding:14px 20px; display:flex; justify-content:space-between; align-items:center; transform:translateY(100%); transition:transform .3s; z-index:20; }
+.batch-action-bar.show { transform:translateY(0); }
+.select-all-btn { display:none; margin-left:10px; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer; font-family:var(--sans); }
+.select-all-btn:hover { border-color:var(--accent); color:var(--accent); }
+.select-mode .select-all-btn { display:inline-block; }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════ SETUP SCREEN ═══════════════════ -->
 <div id="s-setup" class="screen">
 <div class="setup-container">
   <div class="logo-block">
@@ -177,8 +174,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   </div>
   <div class="setup-card">
     <h3>初始設定</h3>
-    <label id="lbl-apikey">Anthropic API Key <span class="req">必填</span></label>
-    <input type="password" id="inp-apikey" placeholder="sk-ant-api03-..." autocomplete="off">
+    <label id="lbl-apikey">Gemini API Key <span class="req">必填</span></label>
+    <input type="password" id="inp-apikey" placeholder="AIzaSy..." autocomplete="off">
     <div class="divider"><span>Firebase 多裝置同步（選填）</span></div>
     <label>Project ID</label>
     <input type="text" id="inp-fbproject" placeholder="my-storage-app">
@@ -193,7 +190,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 </div>
 </div>
 
-<!-- ═══════════════════ MAIN SCREEN ═══════════════════ -->
 <div id="s-main" class="screen">
 <div class="header">
   <span class="header-title">◈ StoreSmart</span>
@@ -217,7 +213,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
       <button class="btn-sm" style="flex:1" onclick="document.getElementById('lens-input').click()">Lens 截圖（可多選）</button>
     </div>
     <input type="file" id="lens-input" accept="image/*" multiple style="display:none" onchange="handleBatchLens(event)">
-    <!-- 商品名稱直接輸入 -->
     <div style="margin-top:12px">
       <div style="display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0 12px">
         <span style="font-size:15px;color:var(--muted)">🔍</span>
@@ -247,7 +242,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 </div>
 </div>
 
-<!-- ═══════════════════ PROCESSING SCREEN ═══════════════════ -->
 <div id="s-processing" class="screen">
 <div class="processing-container">
   <div class="spinner"></div>
@@ -255,7 +249,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 </div>
 </div>
 
-<!-- ═══════════════════ RESULT SCREEN ═══════════════════ -->
 <div id="s-result" class="screen">
 <div class="header">
   <button class="back-btn" onclick="cancelResult()">← 返回</button>
@@ -288,7 +281,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 </div>
 </div>
 
-<!-- ═══════════════════ SEARCH RESULTS SCREEN ═══════════════════ -->
 <div id="s-search" class="screen">
 <div class="header">
   <button class="back-btn" onclick="showScreen('s-main')">← 返回</button>
@@ -297,21 +289,24 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 <div id="search-results" class="item-list padded"></div>
 </div>
 
-<!-- ═══════════════════ INVENTORY SCREEN ═══════════════════ -->
 <div id="s-inventory" class="screen">
 <div class="header">
-  <button class="back-btn" onclick="showScreen('s-main')">← 返回</button>
+  <button class="back-btn" onclick="closeInventory()">← 返回</button>
   <span class="header-title">全部物品</span>
+  <button class="back-btn" id="btn-toggle-select" onclick="toggleSelectMode()">選取</button>
 </div>
-<div id="inventory-content" class="padded"></div>
+<div id="inventory-content" class="padded" style="padding-bottom:80px"></div>
+<div id="batch-action-bar" class="batch-action-bar">
+  <span id="selected-count" style="font-size:14px;color:var(--text);font-weight:700">已選取 0 件</span>
+  <button class="btn-danger" style="margin:0;padding:8px 20px" onclick="confirmBatchDelete()">刪除</button>
+</div>
 </div>
 
-<!-- ═══════════════════ ITEM DETAIL MODAL ═══════════════════ -->
 <div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal(event)">
 <div class="modal-sheet" onclick="event.stopPropagation()">
   <div class="modal-drag"></div>
-  <div id="modal-thumb-wrap" style="width:100%;height:140px;border-radius:10px;overflow:hidden;background:var(--surface);margin-bottom:14px">
-    <img id="modal-img" src="" style="width:100%;height:140px;object-fit:cover">
+  <div id="modal-thumb-wrap" style="width:100%;max-height:300px;border-radius:10px;overflow:hidden;background:var(--surface);margin-bottom:14px;display:flex;justify-content:center;align-items:center;">
+    <img id="modal-img" src="" style="max-width:100%;max-height:300px;object-fit:contain;">
   </div>
   <div id="modal-name" class="modal-name"></div>
   <div id="modal-badge" class="category-badge" style="display:inline-block;margin-bottom:12px"></div>
@@ -323,14 +318,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 </div>
 </div>
 
-<!-- ═══════════════════ BATCH SCREEN ═══════════════════ -->
 <div id="s-batch" class="screen">
 <div class="header">
   <button class="back-btn" id="batch-back-btn" onclick="cancelBatch()">✕ 取消</button>
   <span class="header-title" id="batch-title">批次建檔</span>
 </div>
 <div style="padding:16px 20px 80px;flex:1;overflow-y:auto">
-  <!-- Progress bar -->
   <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:16px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <span id="batch-status-text" style="font-size:14px;font-weight:500"></span>
@@ -340,9 +333,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
       <div id="batch-progress-bar" style="height:100%;background:var(--accent);border-radius:4px;width:0%;transition:width .4s"></div>
     </div>
   </div>
-  <!-- Item list with status -->
   <div id="batch-item-list"></div>
-  <!-- Done summary -->
   <div id="batch-done-panel" style="display:none">
     <div style="text-align:center;padding:16px 0 24px">
       <div style="font-size:36px;margin-bottom:8px" id="batch-done-icon">✓</div>
@@ -354,7 +345,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 </div>
 </div>
 
-<!-- ═══════════════════ ZONES SCREEN ═══════════════════ -->
 <div id="s-zones" class="screen">
 <div class="header">
   <button class="back-btn" onclick="showScreen('s-main')">← 返回</button>
@@ -363,7 +353,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 <div id="zones-content" class="padded"></div>
 </div>
 
-<!-- ═══════════════════ TOAST ═══════════════════ -->
 <div id="toast" class="toast"></div>
 
 <script>
@@ -374,10 +363,36 @@ const STORAGE_KEY = 'storesmart_cfg';
 const ITEMS_KEY   = 'storesmart_items';
 
 // ══════════════════════════════════════════════
-// LOCATION-BASED STORAGE SYSTEM (V2)
+// GEMINI API HELPER (REPLACES CLAUDE)
+// ══════════════════════════════════════════════
+async function callGeminiAPI(prompt, base64Image = null) {
+  const parts = [{ text: prompt }];
+  if (base64Image) {
+    parts.push({ inlineData: { mimeType: 'image/jpeg', data: base64Image } });
+  }
+
+  const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${cfg.apiKey}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: parts }],
+      generationConfig: { responseMimeType: "application/json" }
+    })
+  });
+
+  if (!resp.ok) { 
+    const e = await resp.json().catch(() => ({})); 
+    throw new Error(`Gemini API Error ${resp.status}: ${e?.error?.message || ''}`); 
+  }
+  
+  const data = await resp.json();
+  return data.candidates[0].content.parts[0].text;
+}
+
+// ══════════════════════════════════════════════
+// LOCATION-BASED STORAGE SYSTEM
 // ══════════════════════════════════════════════
 const LOCATIONS_KEY = 'storesmart_locations';
-
 const DEFAULT_LOCATIONS = [
   { id:'loc_1', name:'書房書櫃', bagSizeMl:2000, hints:'文具、電子配件、小物' },
   { id:'loc_2', name:'車庫層架', bagSizeMl:10000, hints:'工具、五金、戶外' },
@@ -391,9 +406,7 @@ function loadLocations() {
   LOCATIONS = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
 }
 
-function saveLocations() {
-  localStorage.setItem(LOCATIONS_KEY, JSON.stringify(LOCATIONS));
-}
+function saveLocations() { localStorage.setItem(LOCATIONS_KEY, JSON.stringify(LOCATIONS)); }
 
 function addLocation(name, bagSizeMl, hints) {
   const id = 'loc_' + Date.now();
@@ -407,12 +420,10 @@ function removeLocation(id) {
   saveLocations();
 }
 
-// Assign a bag number within a location based on tag overlap + volume
 function assignBag(locationId, featureTags, totalVolumeMl, allItems) {
   const loc = LOCATIONS.find(l => l.id === locationId);
   if (!loc) return { locationId, locationName:'未知', bagNum:1 };
 
-  // Group existing items by bag number for this location
   const locItems = allItems.filter(i => i.locationId === locationId);
   const bags = {};
   locItems.forEach(i => {
@@ -423,11 +434,8 @@ function assignBag(locationId, featureTags, totalVolumeMl, allItems) {
   });
 
   const bagNums = Object.keys(bags).map(Number).sort((a,b) => a-b);
-  if (bagNums.length === 0) {
-    return { locationId, locationName: loc.name, bagNum: 1 };
-  }
+  if (bagNums.length === 0) return { locationId, locationName: loc.name, bagNum: 1 };
 
-  // Find a bag with tag overlap AND remaining capacity (search from newest)
   const newTags = new Set((featureTags || []).map(t => t.toLowerCase()));
   for (let i = bagNums.length - 1; i >= 0; i--) {
     const num = bagNums[i];
@@ -438,42 +446,24 @@ function assignBag(locationId, featureTags, totalVolumeMl, allItems) {
       return { locationId, locationName: loc.name, bagNum: num };
     }
   }
-
-  // No tag overlap or all matching bags full → new bag
   const maxBag = bagNums.length ? Math.max(...bagNums) : 0;
   return { locationId, locationName: loc.name, bagNum: maxBag + 1 };
 }
 
-// Build location list string for AI prompt
 function getLocationPromptList() {
-  return LOCATIONS.map(l => {
-    const sizeLabel = l.bagSizeMl >= 1000 ? (l.bagSizeMl/1000)+'L' : l.bagSizeMl+'ml';
-    return `"${l.name}"（${sizeLabel}袋，適合放：${l.hints}）`;
-  }).join('\n');
+  return LOCATIONS.map(l => `"${l.name}"（${l.bagSizeMl >= 1000 ? (l.bagSizeMl/1000)+'L' : l.bagSizeMl+'ml'}袋，適合放：${l.hints}）`).join('\n');
 }
 
-let cfg = {};
-let db  = null;
-let pendingItem = null;   // item waiting to be confirmed
-let currentImageData = null;
+let cfg = {}; let db = null; let pendingItem = null; let currentImageData = null;
 
 // ══════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════
 function init() {
-  // Wait for Firebase SDK to be available (max 3 seconds)
   if (typeof firebase === 'undefined') {
     let waited = 0;
-    const poll = setInterval(() => {
-      waited += 100;
-      if (typeof firebase !== 'undefined' || waited >= 3000) {
-        clearInterval(poll);
-        _init();
-      }
-    }, 100);
-  } else {
-    _init();
-  }
+    const poll = setInterval(() => { waited += 100; if (typeof firebase !== 'undefined' || waited >= 3000) { clearInterval(poll); _init(); } }, 100);
+  } else { _init(); }
 }
 
 function _init() {
@@ -481,97 +471,54 @@ function _init() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
     cfg = JSON.parse(saved);
-    // Pre-fill setup inputs
     if (cfg.apiKey)    document.getElementById('inp-apikey').value   = cfg.apiKey;
     if (cfg.fbProject) document.getElementById('inp-fbproject').value = cfg.fbProject;
     if (cfg.fbApiKey)  document.getElementById('inp-fbapikey').value  = cfg.fbApiKey;
     if (cfg.fbCol)     document.getElementById('inp-fbcol').value     = cfg.fbCol;
-
-    if (cfg.apiKey) {
-      initFirebase();
-      showScreen('s-main');
-      refreshMain();
-      return;
-    }
+    if (cfg.apiKey) { initFirebase(); showScreen('s-main'); refreshMain(); return; }
   }
   showScreen('s-setup');
 }
 
 function initFirebase() {
   if (!cfg.fbProject || !cfg.fbApiKey) return;
-  if (typeof firebase === 'undefined') {
-    console.warn('Firebase SDK not loaded, falling back to localStorage only');
-    cfg.localOnly = true;
-    return;
-  }
-  try {
-    const app = firebase.app('storesmart');
-    db = app.firestore();
-  } catch(e) {
-    try {
-      const app = firebase.initializeApp({
-        apiKey:    cfg.fbApiKey,
-        projectId: cfg.fbProject
-      }, 'storesmart');
-      db = app.firestore();
-    } catch(e2) {
-      console.warn('Firebase init failed, falling back to localStorage:', e2);
-      cfg.localOnly = true;
-    }
+  if (typeof firebase === 'undefined') { console.warn('Firebase SDK not loaded'); cfg.localOnly = true; return; }
+  try { const app = firebase.app('storesmart'); db = app.firestore(); } 
+  catch(e) {
+    try { const app = firebase.initializeApp({ apiKey: cfg.fbApiKey, projectId: cfg.fbProject }, 'storesmart'); db = app.firestore(); } 
+    catch(e2) { console.warn('Firebase init failed', e2); cfg.localOnly = true; }
   }
 }
 
-// ══════════════════════════════════════════════
-// SETUP
-// ══════════════════════════════════════════════
 function saveSetup() {
-  const apiKey    = document.getElementById('inp-apikey').value.trim();
-  const fbProject = document.getElementById('inp-fbproject').value.trim();
-  const fbApiKey  = document.getElementById('inp-fbapikey').value.trim();
-  const fbCol     = document.getElementById('inp-fbcol').value.trim() || 'items';
+  const apiKey = document.getElementById('inp-apikey').value.trim(), fbProject = document.getElementById('inp-fbproject').value.trim(), fbApiKey = document.getElementById('inp-fbapikey').value.trim(), fbCol = document.getElementById('inp-fbcol').value.trim() || 'items';
   if (!apiKey) { alert('請輸入 API Key'); return; }
-  cfg = { apiKey, provider: 'claude', fbProject, fbApiKey, fbCol };
+  cfg = { apiKey, provider: 'gemini', fbProject, fbApiKey, fbCol };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
-  initFirebase();
-  showScreen('s-main');
-  refreshMain();
+  initFirebase(); showScreen('s-main'); refreshMain();
 }
 
 function useLocalOnly() {
   const apiKey = document.getElementById('inp-apikey').value.trim();
   if (!apiKey) { alert('請輸入 API Key'); return; }
-  cfg = { apiKey, provider: 'claude', localOnly: true };
+  cfg = { apiKey, provider: 'gemini', localOnly: true };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
-  showScreen('s-main');
-  refreshMain();
+  showScreen('s-main'); refreshMain();
 }
 
-// ══════════════════════════════════════════════
-// SCREEN MANAGEMENT
-// ══════════════════════════════════════════════
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
+  document.getElementById(id).classList.add('active'); window.scrollTo(0,0);
 }
 
 // ══════════════════════════════════════════════
 // CAMERA / FILE CAPTURE
 // ══════════════════════════════════════════════
-function triggerCamera() {
-  document.getElementById('camera-input').click();
-}
-
+function triggerCamera() { document.getElementById('camera-input').click(); }
 async function handleCapture(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  event.target.value = '';  // reset input
+  const file = event.target.files[0]; if (!file) return; event.target.value = '';
   const reader = new FileReader();
-  reader.onload = async (e) => {
-    const raw = e.target.result;
-    currentImageData = await resizeImage(raw, 1024);
-    await identifyItem(currentImageData);
-  };
+  reader.onload = async (e) => { currentImageData = await resizeImage(e.target.result, 1024); await identifyItem(currentImageData); };
   reader.readAsDataURL(file);
 }
 
@@ -579,13 +526,9 @@ async function resizeImage(dataUrl, maxDim) {
   return new Promise(resolve => {
     const img = new Image();
     img.onload = () => {
-      const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
-      const w = Math.round(img.width * scale);
-      const h = Math.round(img.height * scale);
-      const canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      resolve(canvas.toDataURL('image/jpeg', 0.85));
+      const scale = Math.min(1, maxDim / Math.max(img.width, img.height)), w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+      const canvas = document.createElement('canvas'); canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h); resolve(canvas.toDataURL('image/jpeg', 0.85));
     };
     img.src = dataUrl;
   });
@@ -594,376 +537,149 @@ async function resizeImage(dataUrl, maxDim) {
 // ══════════════════════════════════════════════
 // BATCH PROCESSING
 // ══════════════════════════════════════════════
-let batchQueue   = [];  // { file, mode, dataUrl, status, result }
-let batchRunning = false;
-let batchCancelled = false;
+let batchQueue = []; let batchRunning = false; let batchCancelled = false;
 
 async function handleBatchCapture(event) {
-  const files = Array.from(event.target.files || []);
-  event.target.value = '';
-  if (!files.length) return;
+  const files = Array.from(event.target.files || []); event.target.value = ''; if (!files.length) return;
   if (files.length === 1) {
-    // Single file — use normal flow
     const reader = new FileReader();
-    reader.onload = async (e) => {
-      currentImageData = await resizeImage(e.target.result, 1024);
-      await identifyItem(currentImageData);
-    };
-    reader.readAsDataURL(files[0]);
-    return;
+    reader.onload = async (e) => { currentImageData = await resizeImage(e.target.result, 1024); await identifyItem(currentImageData); };
+    reader.readAsDataURL(files[0]); return;
   }
   await startBatch(files, 'photo');
 }
 
 async function handleBatchLens(event) {
-  const files = Array.from(event.target.files || []);
-  event.target.value = '';
-  if (!files.length) return;
+  const files = Array.from(event.target.files || []); event.target.value = ''; if (!files.length) return;
   if (files.length === 1) {
-    const reader = new FileReader();
-    reader.onload = async (e) => { await parseLensScreenshot(e.target.result); };
-    reader.readAsDataURL(files[0]);
-    return;
+    const reader = new FileReader(); reader.onload = async (e) => { await parseLensScreenshot(e.target.result); }; reader.readAsDataURL(files[0]); return;
   }
   await startBatch(files, 'lens');
 }
 
 async function startBatch(files, mode) {
-  batchCancelled = false;
-  batchRunning   = true;
+  batchCancelled = false; batchRunning = true;
+  batchQueue = files.map((f, i) => ({ id: i, file: f, mode, dataUrl: null, status: 'pending', result: null, error: null, name: f.name }));
 
-  // Build queue with preview thumbnails
-  batchQueue = files.map((f, i) => ({
-    id: i, file: f, mode,
-    dataUrl: null, status: 'pending',  // pending / processing / done / error
-    result: null, error: null, name: f.name
-  }));
+  showScreen('s-batch'); document.getElementById('batch-title').textContent = `批次建檔 ${files.length} 張`;
+  document.getElementById('batch-back-btn').textContent = '✕ 取消'; document.getElementById('batch-done-panel').style.display = 'none'; renderBatchList();
 
-  // Show batch screen
-  showScreen('s-batch');
-  document.getElementById('batch-title').textContent = `批次建檔 ${files.length} 張`;
-  document.getElementById('batch-back-btn').textContent = '✕ 取消';
-  document.getElementById('batch-done-panel').style.display = 'none';
-  renderBatchList();
-
-  // Load thumbnails first
   await Promise.all(batchQueue.map(item => new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      item.dataUrl = await resizeImage(e.target.result, 600);
-      resolve();
-    };
-    reader.readAsDataURL(item.file);
+    const reader = new FileReader(); reader.onload = async (e) => { item.dataUrl = await resizeImage(e.target.result, 600); resolve(); }; reader.readAsDataURL(item.file);
   })));
   renderBatchList();
 
-  // Process sequentially
   let done = 0, errors = 0;
   for (const item of batchQueue) {
     if (batchCancelled) break;
-
-    item.status = 'processing';
-    renderBatchList();
-    updateBatchProgress(done, batchQueue.length, item);
+    item.status = 'processing'; renderBatchList(); updateBatchProgress(done, batchQueue.length, item);
 
     try {
       let result;
-      const fullDataUrl = await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.readAsDataURL(item.file);
-      });
+      const fullDataUrl = await new Promise(resolve => { const reader = new FileReader(); reader.onload = e => resolve(e.target.result); reader.readAsDataURL(item.file); });
 
       if (item.mode === 'lens') {
-        // 直接複用單張 Lens 截圖的完整邏輯
-        // parseLensScreenshot 會設定 currentImageData 並呼叫 processIdentifiedItem
-        // 但批次模式需要直接取得 result，所以提取其核心邏輯
-
         const { productThumb } = await cropLensScreenshot(fullDataUrl);
         item.dataUrl = productThumb;
-
-        // 使用和單張模式完全相同的 extractPrompt
         const base64Full = fullDataUrl.split(',')[1];
-        const extractPrompt = `這是一張 Google 智慧鏡頭或 Google AI 搜尋的截圖。
-請讀取截圖中關於物品的資訊，回應純 JSON（不含其他文字）：
-{
-  "product_name": "完整商品名稱（含品牌和型號，從文字中提取）",
-  "brand": "品牌名稱",
-  "key_features": ["文字中提到的功能特點1", "特點2", "特點3"],
-  "confidence": "high/medium/low"
-}`;
-        let extracted;
+        const extractPrompt = `這是一張 Google 智慧鏡頭或 Google AI 搜尋的截圖。請讀取截圖中關於物品的資訊，回應純 JSON（不含其他文字）：{"product_name": "完整商品名稱","brand": "品牌名稱","key_features": ["特點1"],"confidence": "high/medium/low"}`;
+        
+        const textResp = await callGeminiAPI(extractPrompt, base64Full);
+        const extracted = safeParseJSON(textResp);
 
-        const r = await fetch('https://api.anthropic.com/v1/messages', {
-            method:'POST',
-            headers:{ 'Content-Type':'application/json','x-api-key':cfg.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
-            body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:600,
-              messages:[{ role:'user', content:[
-                { type:'image', source:{ type:'base64', media_type:'image/jpeg', data:base64Full } },
-                { type:'text', text: extractPrompt }
-              ]}]
-            })
-          });
-          if (!r.ok) { const e=await r.json().catch(()=>{}); throw new Error(`Claude ${r.status}: ${e?.error?.message||''}`); }
-          const d = await r.json();
-          extracted = safeParseJSON(d.content[0].text);
-
-        result = await buildItemFromProductName(
-          extracted.product_name || item.file.name,
-          { ...extracted, description_snippets: extracted.key_features },
-          item.dataUrl  // 傳入裁切出的物品照片，讓 AI 辨識顏色
-        );
+        result = await buildItemFromProductName(extracted.product_name || item.file.name, { ...extracted, description_snippets: extracted.key_features }, item.dataUrl);
         result._useThumb = item.dataUrl;
       } else {
-        // Normal photo: full AI identification
         const imageData = await resizeImage(fullDataUrl, 1024);
         item.dataUrl = imageData;
-        result = await identifyWithClaude(imageData);
+        result = await identifyWithGemini(imageData);
       }
 
-      // Auto-save — batch mode always creates new items (no duplicate merging)
       const allItems = await loadItems();
-      const suggestedName = result.suggested_location || '';
-      const loc = LOCATIONS.find(l => l.name === suggestedName) || LOCATIONS[0];
-      const volMl = parseInt(result.estimate_volume_ml) || 100;
-      const featureTags = result.feature_tags || [];
+      const loc = LOCATIONS.find(l => l.name === (result.suggested_location || '')) || LOCATIONS[0];
+      const volMl = parseInt(result.estimate_volume_ml) || 100, featureTags = result.feature_tags || [];
       const bagInfo = assignBag(loc.id, featureTags, volMl, allItems);
       const now = Date.now();
-      const savedItem = {
-        name:            result.name,
-        name_en:         result.name_en || '',
-        locationId:      bagInfo.locationId,
-        locationName:    bagInfo.locationName,
-        bagNum:          bagInfo.bagNum,
-        estimateVolumeMl:volMl,
-        quantity:        1,
-        featureTags:     featureTags,
-        description:     result.description || '',
-        keywords:        result.keywords || [],
-        id: 'item_' + now + '_' + Math.random().toString(36).slice(2,5),
-        createdAt: now,
-        updatedAt: now,
-        imageData: result._useThumb || item.dataUrl || '',
-      };
+      const savedItem = { name: result.name, name_en: result.name_en || '', locationId: bagInfo.locationId, locationName: bagInfo.locationName, bagNum: bagInfo.bagNum, estimateVolumeMl:volMl, quantity: 1, featureTags: featureTags, description: result.description || '', keywords: result.keywords || [], id: 'item_' + now + '_' + Math.random().toString(36).slice(2,5), createdAt: now, updatedAt: now, imageData: result._useThumb || item.dataUrl || '' };
       await saveItem(savedItem);
 
-      item.result = savedItem;
-      item.status = 'done';
-      done++;
-    } catch(err) {
-      item.error = err.message;
-      item.status = 'error';
-      errors++;
-    }
+      item.result = savedItem; item.status = 'done'; done++;
+    } catch(err) { item.error = err.message; item.status = 'error'; errors++; }
 
-    renderBatchList();
-    updateBatchProgress(done + errors, batchQueue.length, null);
-
-    // Rate limit pause between items
+    renderBatchList(); updateBatchProgress(done + errors, batchQueue.length, null);
     if (!batchCancelled) await new Promise(r => setTimeout(r, 600));
   }
 
-  // Done
-  batchRunning = false;
-  document.getElementById('batch-back-btn').textContent = '← 返回';
-  document.getElementById('batch-done-panel').style.display = 'block';
+  batchRunning = false; document.getElementById('batch-back-btn').textContent = '← 返回'; document.getElementById('batch-done-panel').style.display = 'block';
   document.getElementById('batch-done-icon').textContent = errors === 0 ? '✓' : '⚠';
-  document.getElementById('batch-done-text').textContent =
-    batchCancelled ? '已取消批次建檔' : `完成！共建檔 ${done} 件`;
-  document.getElementById('batch-done-sub').textContent =
-    errors > 0 ? `失敗 ${errors} 件，可重試` : '所有物品已儲存';
+  document.getElementById('batch-done-text').textContent = batchCancelled ? '已取消批次建檔' : `完成！共建檔 ${done} 件`;
+  document.getElementById('batch-done-sub').textContent = errors > 0 ? `失敗 ${errors} 件，可重試` : '所有物品已儲存';
   updateBatchProgress(batchQueue.length, batchQueue.length, null);
 }
 
-function cancelBatch() {
-  if (batchRunning) {
-    batchCancelled = true;
-    batchRunning = false;
-  }
-  showScreen('s-main');
-  refreshMain();
-}
-
+function cancelBatch() { if (batchRunning) { batchCancelled = true; batchRunning = false; } showScreen('s-main'); refreshMain(); }
 function updateBatchProgress(done, total, current) {
   const pct = total > 0 ? Math.round(done / total * 100) : 0;
-  document.getElementById('batch-progress-bar').style.width = pct + '%';
-  document.getElementById('batch-count-badge').textContent = `${done} / ${total}`;
-  document.getElementById('batch-status-text').textContent =
-    current ? `辨識中：${current.file.name.slice(0,20)}...` :
-    done === total ? '全部完成' : '準備中...';
+  document.getElementById('batch-progress-bar').style.width = pct + '%'; document.getElementById('batch-count-badge').textContent = `${done} / ${total}`;
+  document.getElementById('batch-status-text').textContent = current ? `辨識中：${current.file.name.slice(0,20)}...` : done === total ? '全部完成' : '準備中...';
 }
-
 function renderBatchList() {
-  const el = document.getElementById('batch-item-list');
-  el.innerHTML = batchQueue.map(item => {
-    const statusIcon =
-      item.status === 'pending'    ? '<span style="color:var(--dim)">○</span>' :
-      item.status === 'processing' ? '<div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0"></div>' :
-      item.status === 'done'       ? '<span style="color:var(--green)">✓</span>' :
-                                     '<span style="color:var(--red)">✗</span>';
+  document.getElementById('batch-item-list').innerHTML = batchQueue.map(item => {
+    const statusIcon = item.status === 'pending' ? '<span style="color:var(--dim)">○</span>' : item.status === 'processing' ? '<div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0"></div>' : item.status === 'done' ? '<span style="color:var(--green)">✓</span>' : '<span style="color:var(--red)">✗</span>';
     const name = item.result?.name || item.name || '辨識中...';
-    const meta = item.status === 'done'
-      ? `#${item.result?.bagNum || 1} ${item.result?.locationName || ''}`
-      : item.status === 'error' ? item.error?.slice(0,40) || '失敗'
-      : item.status === 'processing' ? '辨識中...' : '等待中';
-    const thumbSrc = item.dataUrl || '';
-    return `<div class="batch-item ${item.status}">
-      ${thumbSrc
-        ? `<img class="batch-thumb" src="${thumbSrc}">`
-        : `<div class="batch-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:18px">◻</div>`}
-      <div class="batch-info">
-        <div class="batch-name">${name}</div>
-        <div class="batch-meta">${meta}</div>
-      </div>
-      <div class="batch-status-icon">${statusIcon}</div>
-    </div>`;
+    const meta = item.status === 'done' ? `#${item.result?.bagNum || 1} ${item.result?.locationName || ''}` : item.status === 'error' ? item.error?.slice(0,40) || '失敗' : item.status === 'processing' ? '辨識中...' : '等待中';
+    return `<div class="batch-item ${item.status}">${item.dataUrl ? `<img class="batch-thumb" src="${item.dataUrl}">` : `<div class="batch-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:18px">◻</div>`}<div class="batch-info"><div class="batch-name">${name}</div><div class="batch-meta">${meta}</div></div><div class="batch-status-icon">${statusIcon}</div></div>`;
   }).join('');
 }
 
 // ══════════════════════════════════════════════
-// GOOGLE LENS SCREENSHOT MODE（智慧解析）
+// GOOGLE LENS SCREENSHOT MODE
 // ══════════════════════════════════════════════
 async function handleLensScreenshot(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  event.target.value = '';
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    await parseLensScreenshot(e.target.result);
-  };
-  reader.readAsDataURL(file);
+  const file = event.target.files[0]; if (!file) return; event.target.value = '';
+  const reader = new FileReader(); reader.onload = async (e) => { await parseLensScreenshot(e.target.result); }; reader.readAsDataURL(file);
 }
 
-// 解析 Google Lens 截圖：
-// 1. 裁切上半部（物品照片）作為縮圖
-// 2. 裁切下半部（AI 摘要文字區域）讀取文字
-// 3. 用 AI OCR 提取商品名稱 → 直接建檔，不需再呼叫視覺辨識
 async function parseLensScreenshot(fullDataUrl) {
-  showScreen('s-processing');
-  setProcessingMsg('解析 Google Lens 截圖...');
-
+  showScreen('s-processing'); setProcessingMsg('解析 Google Lens 截圖...');
   try {
-    // Step 1: 裁切出物品照片（上半部 ~62%，扣除狀態列）和文字區（下半部）
-    const { productThumb, textRegion } = await cropLensScreenshot(fullDataUrl);
-    currentImageData = productThumb;  // 物品照片作為縮圖
+    const { productThumb } = await cropLensScreenshot(fullDataUrl);
+    currentImageData = productThumb; setProcessingMsg('讀取 AI 摘要文字...');
 
-    setProcessingMsg('讀取 AI 摘要文字...');
-
-    // Step 2: 用 AI 讀取截圖中的文字（OCR + 結構化提取）
-    // 把整張截圖送給 AI，讓它讀出 Google 已識別的商品名稱和摘要
     const base64Full = fullDataUrl.split(',')[1];
-    const extractPrompt = `這是一張 Google 智慧鏡頭或 Google AI 搜尋的截圖。
-請讀取截圖中關於物品的資訊，回應純 JSON（不含其他文字）：
-{
-  "product_name": "完整商品名稱（含品牌和型號，從文字中提取）",
-  "brand": "品牌名稱",
-  "key_features": ["文字中提到的功能特點1", "特點2", "特點3"],
-  "confidence": "high/medium/low"
-}`;
-
-    let extracted;
-
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json','x-api-key':cfg.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
-        body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:600,
-          messages:[{ role:'user', content:[
-            { type:'image', source:{ type:'base64', media_type:'image/jpeg', data:base64Full } },
-            { type:'text', text: extractPrompt }
-          ]}]
-        })
-      });
-      if (!resp.ok) throw new Error(`Claude ${resp.status}`);
-      const data = await resp.json();
-      extracted = safeParseJSON(data.content[0].text);
+    const extractPrompt = `這是一張 Google 智慧鏡頭或 Google AI 搜尋的截圖。請讀取截圖中關於物品的資訊，回應純 JSON（不含其他文字）：{"product_name": "完整商品名稱","brand": "品牌名稱","key_features": ["特點1"],"confidence": "high/medium/low"}`;
+    const textResp = await callGeminiAPI(extractPrompt, base64Full);
+    const extracted = safeParseJSON(textResp);
 
     setProcessingMsg(`找到「${extracted.product_name}」，查詢完整規格...`);
-
-    // Step 3: 用商品名稱 + 物品縮圖查詢完整屬性（含顏色辨識）
-    const item = await buildItemFromProductName(
-      extracted.product_name,
-      { ...extracted, description_snippets: extracted.key_features },
-      productThumb  // 傳入裁切出的物品照片，讓 AI 辨識顏色
-    );
-
-    // 確保縮圖是物品照片（不是整張截圖）
+    const item = await buildItemFromProductName(extracted.product_name, { ...extracted, description_snippets: extracted.key_features }, productThumb);
     if (!item.imageData) item._useThumb = productThumb;
-
     await processIdentifiedItem(item);
   } catch(err) {
-    showScreen('s-main');
-    showToast('截圖解析失敗：' + err.message, 'error');
+    showScreen('s-main'); showToast('截圖解析失敗：' + err.message, 'error');
   }
 }
 
-// 自動偵測 Google Lens 截圖版面格式：
-// 格式A（取景框模式）：中央大圖 + 下方 AI 摘要
-// 格式B（AI 模式）    ：右上角小縮圖 + 全螢幕文字
 async function cropLensScreenshot(dataUrl) {
   return new Promise(resolve => {
     const img = new Image();
     img.onload = () => {
-      const W = img.width;
-      const H = img.height;
+      const W = img.width, H = img.height;
+      const sc = document.createElement('canvas'); sc.width = W; sc.height = H;
+      const ctx = sc.getContext('2d'); ctx.drawImage(img, 0, 0);
 
-      // 畫到 canvas 以便取樣像素
-      const sc = document.createElement('canvas');
-      sc.width = W; sc.height = H;
-      sc.getContext('2d').drawImage(img, 0, 0);
-      const ctx = sc.getContext('2d');
+      const centerData = ctx.getImageData(Math.floor(W * 0.3), Math.floor(H * 0.2), Math.floor(W * 0.4), Math.floor(H * 0.2));
+      let lumaSum = 0; for (let i = 0; i < centerData.data.length; i += 4) lumaSum += 0.299 * centerData.data[i] + 0.587 * centerData.data[i+1] + 0.114 * centerData.data[i+2];
+      const avgLuma = lumaSum / (centerData.data.length / 4);
 
-      // 偵測中央區域（y:15%~60%）的平均亮度
-      // 格式A：中央是物品照片 → 亮度高（>80）
-      // 格式B：中央是深色文字背景 → 亮度低（<60）
-      const cX = Math.round(W * 0.15), cY = Math.round(H * 0.15);
-      const cW = Math.round(W * 0.70), cH = Math.round(H * 0.42);
-      const centerPx = ctx.getImageData(cX, cY, cW, cH).data;
-      let brightness = 0;
-      for (let i = 0; i < centerPx.length; i += 16) {
-        brightness += (centerPx[i] + centerPx[i+1] + centerPx[i+2]) / 3;
-      }
-      brightness /= (centerPx.length / 16);
-
-      let productThumb;
-
-      if (brightness > 70) {
-        // ── 全部模式（取景框模式）：中央有大圖 + 取景框角標
-        // 取景框區域約 y:7%~62%，左右各留少量邊距
-        const pc = document.createElement('canvas');
-        const cropX = Math.round(W * 0.02);
-        const cropY = Math.round(H * 0.07);
-        const cropW = Math.round(W * 0.96);
-        const cropH = Math.round(H * 0.56);
-        pc.width = cropW; pc.height = cropH;
-        pc.getContext('2d').drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
-        productThumb = pc.toDataURL('image/jpeg', 0.90);
+      let cropX, cropY, cropW, cropH; const tc = document.createElement('canvas');
+      if (avgLuma < 60) {
+        cropX = Math.floor(W * 0.60); cropY = Math.floor(H * 0.10); cropW = Math.floor(W * 0.38); cropH = Math.floor(H * 0.25);
       } else {
-        // ── AI 模式：右側有小縮圖，位置約 x:55%~98%, y:16%~36%
-        const tc = document.createElement('canvas');
-        const cropX = Math.round(W * 0.55);
-        const cropY = Math.round(H * 0.16);
-        const cropW = Math.round(W * 0.43);
-        const cropH = Math.round(H * 0.20);
-        tc.width = cropW; tc.height = cropH;
-        tc.getContext('2d').drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
-        productThumb = tc.toDataURL('image/jpeg', 0.90);
+        cropX = Math.floor(W * 0.15); cropY = Math.floor(H * 0.15); cropW = Math.floor(W * 0.70); cropH = Math.floor(H * 0.45);
       }
-
-      // 文字區：全部模式用 y:70%~100%，AI 模式用 y:35%~92%
-      const textStartPct = brightness > 70 ? 0.70 : 0.35;
-      const textEndPct   = brightness > 70 ? 1.00 : 0.92;
-      const xt = document.createElement('canvas');
-      xt.width  = W;
-      xt.height = Math.round(H * (textEndPct - textStartPct));
-      xt.getContext('2d').drawImage(img,
-        0, Math.round(H * textStartPct),
-        W, xt.height, 0, 0, W, xt.height);
-      const textRegion = xt.toDataURL('image/jpeg', 0.85);
-
-      const layoutType = brightness > 70 ? 'viewfinder' : 'ai-mode';
-      console.log(`[StoreSmart] Lens 截圖偵測: brightness=${Math.round(brightness)}, layout=${layoutType}, size=${W}x${H}`);
-
-      resolve({ productThumb, textRegion, layoutType });
+      tc.width = cropW; tc.height = cropH; tc.getContext('2d').drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+      resolve({ productThumb: tc.toDataURL('image/jpeg', 0.90), layoutType: avgLuma < 60 ? 'ai-mode' : 'viewfinder' });
     };
     img.src = dataUrl;
   });
@@ -973,539 +689,204 @@ async function cropLensScreenshot(dataUrl) {
 // PRODUCT NAME TEXT INPUT MODE
 // ══════════════════════════════════════════════
 async function handleProductNameInput() {
-  const input = document.getElementById('product-name-input');
-  const name  = input.value.trim();
-  if (!name) { input.focus(); return; }
-  input.value = '';
-  currentImageData = null;  // no image for text-input mode
-  showScreen('s-processing');
-  setProcessingMsg(`查詢「${name}」商品資訊...`);
+  const input = document.getElementById('product-name-input'), name = input.value.trim();
+  if (!name) { input.focus(); return; } input.value = ''; currentImageData = null;
+  showScreen('s-processing'); setProcessingMsg(`查詢「${name}」商品資訊...`);
   try {
     const item = await buildItemFromProductName(name, { product_name: name });
     await processIdentifiedItem(item);
-  } catch(err) {
-    showScreen('s-main');
-    showToast('查詢失敗：' + err.message, 'error');
-  }
+  } catch(err) { showScreen('s-main'); showToast('查詢失敗：' + err.message, 'error'); }
 }
 
-// ── Core: given a product name, build full item profile via Claude prompt
 async function buildItemFromProductName(productName, hints={}, imageDataUrl=null) {
-  const locList = getLocationPromptList();
-  const hasImage = !!imageDataUrl;
-
-  const prompt = `請根據你對「${productName}」這個商品的知識，提供詳細的商品資訊。
-${hasImage ? '附圖是該物品的實際照片，請從圖片判斷顏色/款式。' : ''}
-家中有以下收納位置：
-${locList}
-
-回應純 JSON（不含其他文字）：
-{
-  "name": "完整商品名稱（含品牌型號${hasImage ? '和從圖片辨識出的顏色' : ''}）",
-  "name_en": "English name",
-  "brand": "品牌",
-  "description": "主要規格與特色，50字內",
-  "keywords": ["8~12個搜尋關鍵字，涵蓋品牌/功能/規格/俗稱"],
-  "feature_tags": ["從以下標準標籤中選擇3~5個：書寫,筆類,墨水,鉛芯,修正,紙類,記錄,固定,裝訂,辦公,充電,USB,電源,電池,傳輸線,音頻,耳機,喇叭,藍牙,無線,手機配件,電腦配件,3C,數位,相機,儲存,切割,刀具,鍋具,餐具,烹飪,食材,調味,保鮮,清潔,洗滌,收納,照明,工具,螺絲,五金,測量,膠帶,黏貼,繪畫,手工,縫紉,護理,醫藥,防護,戶外,運動,園藝,汽車,衣物,鞋類,包袋"],
-  "suggested_location": "建議的收納位置名稱（必須是上方列出的其中一個）",
-  "estimate_volume_ml": 估計單件收納體積（毫升整數）
-}`;
-
-  // Build message content: image (if available) + text
-  const content = [];
-  if (hasImage) {
-    const base64 = imageDataUrl.split(',')[1];
-    content.push({ type:'image', source:{ type:'base64', media_type:'image/jpeg', data:base64 } });
-  }
-  content.push({ type:'text', text:prompt });
-
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{ 'Content-Type':'application/json','x-api-key':cfg.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
-    body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:800,
-      messages:[{ role:'user', content }]
-    })
-  });
-  if (!resp.ok) { const e=await resp.json().catch(()=>{}); throw new Error(`Claude ${resp.status}: ${e?.error?.message||''}`); }
-  const data = await resp.json();
-  const text = data.content[0].text;
-  return safeParseJSON(text);
+  const locList = getLocationPromptList(), hasImage = !!imageDataUrl;
+  const prompt = `請根據你對「${productName}」這個商品的知識，提供詳細的商品資訊。\n${hasImage ? '附圖是該物品的實際照片，請從圖片判斷顏色/款式。' : ''}\n家中有以下收納位置：\n${locList}\n回應純 JSON（不含其他文字）：\n{"name": "完整商品名稱","name_en": "English name","brand": "品牌","description": "主要規格與特色，50字內","keywords": ["8~12個搜尋關鍵字"],"feature_tags": ["書寫,筆類,3C...等"],"suggested_location": "建議的收納位置名稱","estimate_volume_ml": 100}`;
+  const base64 = hasImage ? imageDataUrl.split(',')[1] : null;
+  const textResp = await callGeminiAPI(prompt, base64);
+  return safeParseJSON(textResp);
 }
 
 async function identifyItem(imageData) {
   showScreen('s-processing');
-  try {
-    setProcessingMsg('AI 辨識物品中...');
-    const item = await identifyWithClaude(imageData);
-    await processIdentifiedItem(item);
-  } catch(err) {
-    showScreen('s-main');
-    const msg = err.message || '';
-    if (msg.includes('401') || msg.includes('invalid x-api-key') || msg.includes('invalid_api_key')) {
-      showToast('API Key 無效，請重新設定', 'error');
-      setTimeout(() => showScreen('s-setup'), 1500);
-    } else {
-      showToast('辨識失敗：' + msg, 'error');
-    }
+  try { setProcessingMsg('AI 辨識物品中...'); const item = await identifyWithGemini(imageData); await processIdentifiedItem(item); } 
+  catch(err) {
+    showScreen('s-main'); const msg = err.message || '';
+    if (msg.includes('400') || msg.includes('API key not valid')) { showToast('API Key 無效，請重新設定', 'error'); setTimeout(() => showScreen('s-setup'), 1500); } 
+    else { showToast('辨識失敗：' + msg, 'error'); }
   }
 }
 
-// ── Prompt A: 模擬電商分類（Claude prompt）
-// ── 強健的 JSON 解析：處理 AI 回傳的特殊字符（& 4&1 等）
 function safeParseJSON(text) {
-  // 清理 markdown code fence
   text = text.replace(/^```json\s*/i, '').replace(/```\s*$/,'').trim();
-
-  // 先嘗試直接解析
   try { return JSON.parse(text); } catch(e1) {}
-
-  // 擷取第一個 {...} 區塊
-  const m = text.match(/\{[\s\S]*\}/);
-  if (!m) throw new Error('回應中找不到 JSON 格式');
-  let raw = m[0];
-
-  // 修復常見問題：
-  // 1. & 符號（JSON 合法，但 AI 有時會誤放 HTML entity &amp;）
-  raw = raw.replace(/&amp;/g, '&');
-
-  // 2. 字串值中的未跳脫換行符（\n → \\n）
-  raw = raw.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, (match) => {
-    return match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
-  });
-
-  // 3. 試著用 JSON.parse 寬鬆模式（eval 僅在確定是物件字面量時使用）
+  const m = text.match(/\{[\s\S]*\}/); if (!m) throw new Error('回應中找不到 JSON 格式');
+  let raw = m[0].replace(/&amp;/g, '&');
+  raw = raw.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, (match) => match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t'));
   try { return JSON.parse(raw); } catch(e2) {}
-
-  // 4. 逐欄位提取關鍵字段（最後手段）
-  const extract = (key) => {
-    const re = new RegExp(`"${key}"\\s*:\\s*"([^"]*)"`, 'i');
-    const r = raw.match(re);
-    return r ? r[1] : '';
-  };
-  const extractArr = (key) => {
-    const re = new RegExp(`"${key}"\\s*:\\s*\\[([^\\]]*)\\]`, 'i');
-    const r = raw.match(re);
-    if (!r) return [];
-    return r[1].match(/"([^"]*)"/g)?.map(s => s.replace(/"/g,'')) || [];
-  };
+  const extract = (key) => { const r = raw.match(new RegExp(`"${key}"\\s*:\\s*"([^"]*)"`, 'i')); return r ? r[1] : ''; };
+  const extractArr = (key) => { const r = raw.match(new RegExp(`"${key}"\\s*:\\s*\\[([^\\]]*)\\]`, 'i')); if (!r) return []; return r[1].match(/"([^"]*)"/g)?.map(s => s.replace(/"/g,'')) || []; };
   return {
-    name:              extract('name') || extract('product_name') || '未知商品',
-    name_en:           extract('name_en'),
-    brand:             extract('brand'),
-    description:       extract('description') || extract('summary_text'),
-    keywords:          extractArr('keywords'),
-    feature_tags:      extractArr('feature_tags'),
-    key_features:      extractArr('key_features'),
-    suggested_location:extract('suggested_location') || '',
-    estimate_volume_ml:parseInt(extract('estimate_volume_ml')) || 100,
-    confidence:        extract('confidence') || 'medium',
+    name: extract('name') || extract('product_name') || '未知商品', name_en: extract('name_en'), brand: extract('brand'), description: extract('description') || extract('summary_text'),
+    keywords: extractArr('keywords'), feature_tags: extractArr('feature_tags'), key_features: extractArr('key_features'), suggested_location: extract('suggested_location') || '',
+    estimate_volume_ml: parseInt(extract('estimate_volume_ml')) || 100, confidence: extract('confidence') || 'medium',
   };
 }
+
 function buildPrompt() {
   const locList = getLocationPromptList();
-  return `你是智慧收納系統的物品辨識模組。請辨識圖片中的物品。
-
-家中有以下收納位置：
-${locList}
-
-請根據物品特性，建議最適合的收納位置，並估算物品的收納體積。
-回應純 JSON 格式（不要有任何其他文字）：
-{
-  "name": "完整商品中文名稱（含品牌型號和顏色/款式，例：Sony WF-1000XM3 真無線降噪耳機 黑色）",
-  "name_en": "English product name",
-  "brand": "品牌名稱",
-  "description": "30字內描述，包含主要規格或特色",
-  "keywords": ["8~12個搜尋關鍵字，包含品牌、型號、功能、材質、規格、顏色"],
-  "feature_tags": ["從以下標準標籤中選擇3~5個最相關的：書寫,筆類,墨水,鉛芯,修正,紙類,記錄,固定,裝訂,辦公,充電,USB,電源,電池,傳輸線,音頻,耳機,喇叭,藍牙,無線,手機配件,電腦配件,3C,數位,相機,儲存,切割,刀具,鍋具,餐具,烹飪,食材,調味,保鮮,清潔,洗滌,收納,照明,工具,螺絲,五金,測量,膠帶,黏貼,繪畫,手工,縫紉,護理,醫藥,防護,戶外,運動,園藝,汽車,衣物,鞋類,包袋。如果都不適合可自訂，但盡量使用標準標籤"],
-  "suggested_location": "建議的收納位置名稱（必須是上方列出的其中一個）",
-  "estimate_volume_ml": 估計單件收納體積（毫升整數，例如一支筆約25，一個充電器約180，一副耳機含充電盒約200）
-}`;
+  return `你是智慧收納系統的物品辨識模組。請辨識圖片中的物品。\n家中有以下收納位置：\n${locList}\n請根據物品特性，建議最適合的收納位置，並估算物品的收納體積。回應純 JSON 格式（不要有任何其他文字）：\n{"name": "完整商品中文名稱","name_en": "English product name","brand": "品牌名稱","description": "30字內描述","keywords": ["關鍵字1"],"feature_tags": ["書寫"],"suggested_location": "位置名稱","estimate_volume_ml": 100}`;
 }
 
-async function identifyWithClaude(imageData) {
+async function identifyWithGemini(imageData) {
   const base64 = imageData.split(',')[1];
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': cfg.apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 800,
-      messages: [{ role:'user', content:[
-        { type:'image', source:{ type:'base64', media_type:'image/jpeg', data:base64 } },
-        { type:'text', text: buildPrompt() }
-      ]}]
-    })
-  });
-  if (!resp.ok) { const e=await resp.json().catch(()=>{}); throw new Error(`Claude API ${resp.status}: ${e?.error?.message||''}`); }
-  const data = await resp.json();
-  const text = data.content[0].text;
-  return safeParseJSON(text);
+  const textResp = await callGeminiAPI(buildPrompt(), base64);
+  return safeParseJSON(textResp);
 }
 
 async function processIdentifiedItem(item) {
   setProcessingMsg('指派收納位置...');
-  const allItems = await loadItems();
+  const allItems = await loadItems(), match = findDuplicate(item.name, item.keywords, allItems);
+  const loc = LOCATIONS.find(l => l.name === (item.suggested_location || '')) || LOCATIONS[0];
+  const volMl = parseInt(item.estimate_volume_ml) || 100, featureTags = item.feature_tags || [], qty = 1, bagInfo = assignBag(loc.id, featureTags, volMl * qty, allItems);
 
-  // Check for duplicate (fuzzy match by name)
-  const match = findDuplicate(item.name, item.keywords, allItems);
+  pendingItem = { ...item, ...bagInfo, featureTags, estimateVolumeMl: volMl, quantity: qty, imageData: currentImageData, isUpdate: !!match, matchedId: match ? match.id : null };
 
-  // Resolve location from AI suggestion
-  const suggestedName = item.suggested_location || '';
-  const loc = LOCATIONS.find(l => l.name === suggestedName) || LOCATIONS[0];
-  const volMl = parseInt(item.estimate_volume_ml) || 100;
-  const featureTags = item.feature_tags || [];
-  const qty = 1; // default, user can change before confirm
-
-  // Assign bag number based on tag overlap + volume
-  const bagInfo = assignBag(loc.id, featureTags, volMl * qty, allItems);
-
-  pendingItem = {
-    ...item,
-    ...bagInfo,
-    featureTags,
-    estimateVolumeMl: volMl,
-    quantity: qty,
-    imageData: currentImageData,
-    isUpdate: !!match,
-    matchedId: match ? match.id : null
-  };
-
-  // Show result screen
   document.getElementById('result-img').src = pendingItem._useThumb || currentImageData || '';
-  document.getElementById('result-name').textContent = item.name;
-  document.getElementById('result-category').textContent = item.description || '';
-  document.getElementById('result-desc').textContent = '';
+  document.getElementById('result-name').textContent = item.name; document.getElementById('result-category').textContent = item.description || ''; document.getElementById('result-desc').textContent = '';
 
-  const kw = document.getElementById('result-keywords');
-  kw.innerHTML = '';
-
-  // Feature tags (highlighted)
-  if (featureTags.length) {
-    featureTags.forEach(t => {
-      const span = document.createElement('span');
-      span.className = 'keyword-tag';
-      span.style.cssText = 'background:var(--blue-bg);color:var(--blue);border-color:rgba(59,130,246,.3)';
-      span.textContent = t;
-      kw.appendChild(span);
-    });
-  }
-
-  // Volume badge
+  const kw = document.getElementById('result-keywords'); kw.innerHTML = '';
+  if (featureTags.length) featureTags.forEach(t => { const s = document.createElement('span'); s.className = 'keyword-tag'; s.style.cssText = 'background:var(--blue-bg);color:var(--blue);border-color:rgba(59,130,246,.3)'; s.textContent = t; kw.appendChild(s); });
   const volLabel = volMl >= 1000 ? (volMl/1000).toFixed(1)+'L' : volMl+'ml';
-  const volBadge = document.createElement('span');
-  volBadge.className = 'keyword-tag';
-  volBadge.style.cssText = 'background:var(--accent-bg);color:var(--accent);border-color:var(--accent)';
-  volBadge.textContent = '單件 ≈ ' + volLabel;
-  kw.appendChild(volBadge);
+  const volBadge = document.createElement('span'); volBadge.className = 'keyword-tag'; volBadge.style.cssText = 'background:var(--accent-bg);color:var(--accent);border-color:var(--accent)'; volBadge.textContent = '單件 ≈ ' + volLabel; kw.appendChild(volBadge);
 
-  // Quantity input row
-  const qtyRow = document.createElement('div');
-  qtyRow.style.cssText = 'display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px';
-  qtyRow.innerHTML = `
-    <span style="font-size:13px;color:var(--muted)">數量</span>
-    <button onclick="adjustQty(-1)" style="width:30px;height:30px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:16px;cursor:pointer">−</button>
-    <span id="qty-display" style="font-family:var(--mono);font-size:18px;font-weight:700;min-width:28px;text-align:center">1</span>
-    <button onclick="adjustQty(1)" style="width:30px;height:30px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:16px;cursor:pointer">+</button>
-    <span id="qty-total-vol" style="font-size:12px;color:var(--muted);margin-left:auto;font-family:var(--mono)">= ${volLabel}</span>
-  `;
+  const qtyRow = document.createElement('div'); qtyRow.style.cssText = 'display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px';
+  qtyRow.innerHTML = `<span style="font-size:13px;color:var(--muted)">數量</span><button onclick="adjustQty(-1)" style="width:30px;height:30px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:16px;cursor:pointer">−</button><span id="qty-display" style="font-family:var(--mono);font-size:18px;font-weight:700;min-width:28px;text-align:center">1</span><button onclick="adjustQty(1)" style="width:30px;height:30px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:16px;cursor:pointer">+</button><span id="qty-total-vol" style="font-size:12px;color:var(--muted);margin-left:auto;font-family:var(--mono)">= ${volLabel}</span>`;
   kw.appendChild(qtyRow);
 
-  // Search keywords (smaller)
-  if (item.keywords?.length) {
-    const kwDiv = document.createElement('div');
-    kwDiv.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;margin-top:8px';
-    (item.keywords || []).forEach(k => {
-      const span = document.createElement('span');
-      span.className = 'keyword-tag';
-      span.textContent = k;
-      kwDiv.appendChild(span);
-    });
-    kw.appendChild(kwDiv);
-  }
+  if (item.keywords?.length) { const kwDiv = document.createElement('div'); kwDiv.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;margin-top:8px'; (item.keywords || []).forEach(k => { const s = document.createElement('span'); s.className = 'keyword-tag'; s.textContent = k; kwDiv.appendChild(s); }); kw.appendChild(kwDiv); }
 
   const banner = document.getElementById('match-banner');
   if (match) {
     banner.style.display = 'block';
-    banner.innerHTML = `<div class="match-banner-title" style="color:var(--accent)">⚠ 找到類似物品</div>
-      <div class="match-banner-sub" style="margin-bottom:10px">「${match.name}」已在 <strong>#${match.bagNum} ${match.locationName}</strong></div>
-      <div style="display:flex;gap:8px">
-        <button class="btn-sm" style="flex:1;background:var(--green-bg);border-color:var(--green);color:var(--green)" onclick="chooseDuplicateAction('addQty')">同一物品 +1</button>
-        <button class="btn-sm" style="flex:1" onclick="chooseDuplicateAction('newItem')">不同物品（另外建檔）</button>
-      </div>`;
-    // Store match info but don't auto-decide
-    pendingItem._matchRef = match;
-    pendingItem.isUpdate = false;  // default: new item, user can switch
-  } else {
-    banner.style.display = 'none';
-  }
+    banner.innerHTML = `<div class="match-banner-title" style="color:var(--accent)">⚠ 找到類似物品</div><div class="match-banner-sub" style="margin-bottom:10px">「${match.name}」已在 <strong>#${match.bagNum} ${match.locationName}</strong></div><div style="display:flex;gap:8px"><button class="btn-sm" style="flex:1;background:var(--green-bg);border-color:var(--green);color:var(--green)" onclick="chooseDuplicateAction('addQty')">同一物品 +1</button><button class="btn-sm" style="flex:1" onclick="chooseDuplicateAction('newItem')">不同物品（另外建檔）</button></div>`;
+    pendingItem._matchRef = match; pendingItem.isUpdate = false;
+  } else { banner.style.display = 'none'; }
 
-  document.getElementById('result-zonename').textContent = pendingItem.locationName;
-  document.getElementById('result-bag').textContent      = '#' + pendingItem.bagNum;
-
-  showScreen('s-result');
+  document.getElementById('result-zonename').textContent = pendingItem.locationName; document.getElementById('result-bag').textContent = '#' + pendingItem.bagNum; showScreen('s-result');
 }
 
 function adjustQty(delta) {
   if (!pendingItem) return;
-  pendingItem.quantity = Math.max(1, (pendingItem.quantity||1) + delta);
-  document.getElementById('qty-display').textContent = pendingItem.quantity;
-  const totalVol = pendingItem.estimateVolumeMl * pendingItem.quantity;
-  const label = totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml';
-  document.getElementById('qty-total-vol').textContent = '= ' + label;
-
-  // Re-calculate bag assignment with new quantity
+  pendingItem.quantity = Math.max(1, (pendingItem.quantity||1) + delta); document.getElementById('qty-display').textContent = pendingItem.quantity;
+  const totalVol = pendingItem.estimateVolumeMl * pendingItem.quantity; document.getElementById('qty-total-vol').textContent = '= ' + (totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml');
   loadItems().then(allItems => {
-    const featureTags = pendingItem.featureTags || [];
-    const loc = LOCATIONS.find(l => l.id === pendingItem.locationId) || LOCATIONS[0];
-    const bagInfo = assignBag(loc.id, featureTags, totalVol, allItems);
-    pendingItem.locationId   = bagInfo.locationId;
-    pendingItem.locationName = bagInfo.locationName;
-    pendingItem.bagNum       = bagInfo.bagNum;
-    document.getElementById('result-zonename').textContent = bagInfo.locationName;
-    document.getElementById('result-bag').textContent      = '#' + bagInfo.bagNum;
+    const bagInfo = assignBag(pendingItem.locationId, pendingItem.featureTags || [], totalVol, allItems);
+    pendingItem.locationId = bagInfo.locationId; pendingItem.locationName = bagInfo.locationName; pendingItem.bagNum = bagInfo.bagNum;
+    document.getElementById('result-zonename').textContent = bagInfo.locationName; document.getElementById('result-bag').textContent = '#' + bagInfo.bagNum;
   });
 }
 
 function chooseDuplicateAction(action) {
   if (!pendingItem || !pendingItem._matchRef) return;
-  const match = pendingItem._matchRef;
-  const banner = document.getElementById('match-banner');
-
+  const match = pendingItem._matchRef, banner = document.getElementById('match-banner');
   if (action === 'addQty') {
-    // Same item → update existing: go back to original location, increment quantity
-    pendingItem.isUpdate     = true;
-    pendingItem.matchedId    = match.id;
-    pendingItem.locationId   = match.locationId;
-    pendingItem.locationName = match.locationName;
-    pendingItem.bagNum       = match.bagNum;
-    pendingItem.quantity     = (match.quantity || 1) + 1;
-    pendingItem.name         = match.name; // keep original name
-    pendingItem.featureTags  = match.featureTags || pendingItem.featureTags; // keep original tags
-
+    pendingItem.isUpdate = true; pendingItem.matchedId = match.id; pendingItem.locationId = match.locationId; pendingItem.locationName = match.locationName; pendingItem.bagNum = match.bagNum; pendingItem.quantity = (match.quantity || 1) + 1; pendingItem.name = match.name; pendingItem.featureTags = match.featureTags || pendingItem.featureTags;
     document.getElementById('qty-display').textContent = pendingItem.quantity;
-    const totalVol = pendingItem.estimateVolumeMl * pendingItem.quantity;
-    const label = totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml';
-    document.getElementById('qty-total-vol').textContent = '= ' + label;
-    document.getElementById('result-zonename').textContent = match.locationName;
-    document.getElementById('result-bag').textContent      = '#' + match.bagNum;
-
-    banner.innerHTML = `<div class="match-banner-title" style="color:var(--green)">✓ 同一物品，數量 +1</div>
-      <div class="match-banner-sub">將更新「${match.name}」的數量為 ${pendingItem.quantity}</div>`;
+    const totalVol = pendingItem.estimateVolumeMl * pendingItem.quantity; document.getElementById('qty-total-vol').textContent = '= ' + (totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml');
+    document.getElementById('result-zonename').textContent = match.locationName; document.getElementById('result-bag').textContent = '#' + match.bagNum;
+    banner.innerHTML = `<div class="match-banner-title" style="color:var(--green)">✓ 同一物品，數量 +1</div><div class="match-banner-sub">將更新「${match.name}」的數量為 ${pendingItem.quantity}</div>`;
   } else {
-    // Different item → new entry (e.g. different color)
-    pendingItem.isUpdate  = false;
-    pendingItem.matchedId = null;
-    pendingItem._matchRef = null;
-
-    banner.innerHTML = `<div class="match-banner-title" style="color:var(--blue)">→ 另外建檔為不同物品</div>
-      <div class="match-banner-sub">將以「${pendingItem.name}」建立新的收納紀錄</div>`;
+    pendingItem.isUpdate = false; pendingItem.matchedId = null; pendingItem._matchRef = null;
+    banner.innerHTML = `<div class="match-banner-title" style="color:var(--blue)">→ 另外建檔為不同物品</div><div class="match-banner-sub">將以「${pendingItem.name}」建立新的收納紀錄</div>`;
   }
 }
 
 // ══════════════════════════════════════════════
-// DUPLICATE DETECTION
+// DUPLICATE DETECTION & DATA LAYER
 // ══════════════════════════════════════════════
 function findDuplicate(name, keywords, allItems) {
   const normName = name.toLowerCase().replace(/\s/g,'');
   for (const item of allItems) {
     const normItem = (item.name||'').toLowerCase().replace(/\s/g,'');
-    // Exact or near-exact name match
     if (normItem === normName) return item;
-    // Substring match — only when the shorter string is ≥60% of the longer one
-    // (catches "Sony XM5 耳機" vs "Sony WF-1000XM5 真無線降噪耳機",
-    //  but NOT "uni Jetstream" vs "uni α-gel SWITCH")
     if (normItem.length >= 6 && normName.length >= 6) {
-      const shorter = Math.min(normItem.length, normName.length);
-      const longer  = Math.max(normItem.length, normName.length);
-      if (shorter / longer >= 0.6) {
-        if (normItem.includes(normName) || normName.includes(normItem)) return item;
-      }
+      const shorter = Math.min(normItem.length, normName.length), longer = Math.max(normItem.length, normName.length);
+      if (shorter / longer >= 0.6 && (normItem.includes(normName) || normName.includes(normItem))) return item;
     }
-    // Keyword overlap — require ≥4 matches AND ≥40% of query keywords
-    const itemKw = (item.keywords || []).map(k=>k.toLowerCase());
-    const qKw    = (keywords || []).map(k=>k.toLowerCase());
-    const overlap = qKw.filter(k => itemKw.includes(k));
+    const itemKw = (item.keywords || []).map(k=>k.toLowerCase()), qKw = (keywords || []).map(k=>k.toLowerCase()), overlap = qKw.filter(k => itemKw.includes(k));
     if (overlap.length >= 4 && qKw.length > 0 && overlap.length / qKw.length >= 0.4) return item;
   }
   return null;
 }
 
-// ══════════════════════════════════════════════
-// CONFIRM / CANCEL
-// ══════════════════════════════════════════════
 async function confirmItem() {
   if (!pendingItem) return;
-  showScreen('s-processing');
-  setProcessingMsg('儲存中...');
+  showScreen('s-processing'); setProcessingMsg('儲存中...');
   try {
-    const now = Date.now();
-    const item = {
-      name:            pendingItem.name,
-      name_en:         pendingItem.name_en || '',
-      locationId:      pendingItem.locationId,
-      locationName:    pendingItem.locationName,
-      bagNum:          pendingItem.bagNum,
-      estimateVolumeMl:pendingItem.estimateVolumeMl || 100,
-      quantity:        pendingItem.quantity || 1,
-      featureTags:     pendingItem.featureTags || [],
-      description:     pendingItem.description || '',
-      keywords:        pendingItem.keywords    || [],
-      imageData:       pendingItem._useThumb || pendingItem.imageData || '',
-      updatedAt:       now
-    };
-
+    const now = Date.now(), item = { name: pendingItem.name, name_en: pendingItem.name_en || '', locationId: pendingItem.locationId, locationName: pendingItem.locationName, bagNum: pendingItem.bagNum, estimateVolumeMl:pendingItem.estimateVolumeMl || 100, quantity: pendingItem.quantity || 1, featureTags: pendingItem.featureTags || [], description: pendingItem.description || '', keywords: pendingItem.keywords || [], imageData: pendingItem._useThumb || pendingItem.imageData || '', updatedAt: now };
     if (pendingItem.isUpdate && pendingItem.matchedId) {
-      item.id = pendingItem.matchedId;
-      item.createdAt = pendingItem._matchRef?.createdAt || pendingItem.createdAt || now;
-      // Keep original image if updating quantity
-      if (pendingItem._matchRef?.imageData && !item.imageData) {
-        item.imageData = pendingItem._matchRef.imageData;
-      }
-      await updateItem(item);
-      showToast('已更新：#' + item.bagNum + ' ' + item.locationName);
+      item.id = pendingItem.matchedId; item.createdAt = pendingItem._matchRef?.createdAt || pendingItem.createdAt || now;
+      if (pendingItem._matchRef?.imageData && !item.imageData) item.imageData = pendingItem._matchRef.imageData;
+      await updateItem(item); showToast('已更新：#' + item.bagNum + ' ' + item.locationName);
     } else {
-      item.id        = 'item_' + now + '_' + Math.random().toString(36).slice(2,7);
-      item.createdAt = now;
-      await saveItem(item);
-      showToast('已儲存到 #' + item.bagNum + ' ' + item.locationName);
+      item.id = 'item_' + now + '_' + Math.random().toString(36).slice(2,7); item.createdAt = now;
+      await saveItem(item); showToast('已儲存到 #' + item.bagNum + ' ' + item.locationName);
     }
-    pendingItem = null;
-    currentImageData = null;
-    showScreen('s-main');
-    refreshMain();
-  } catch(err) {
-    showScreen('s-result');
-    showToast('儲存失敗：' + err.message, 'error');
-  }
+    pendingItem = null; currentImageData = null; showScreen('s-main'); refreshMain();
+  } catch(err) { showScreen('s-result'); showToast('儲存失敗：' + err.message, 'error'); }
 }
 
-function cancelResult() {
-  pendingItem = null;
-  currentImageData = null;
-  showScreen('s-main');
-}
+function cancelResult() { pendingItem = null; currentImageData = null; showScreen('s-main'); }
 
-// ══════════════════════════════════════════════
-// DATA LAYER (Firestore + localStorage fallback)
-// ══════════════════════════════════════════════
 async function loadItems() {
-  if (db && !cfg.localOnly) {
-    try {
-      const snap = await db.collection(cfg.fbCol||'items').orderBy('createdAt','desc').get();
-      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    } catch(e) { console.warn('Firestore read failed, using local', e); }
-  }
+  if (db && !cfg.localOnly) { try { const snap = await db.collection(cfg.fbCol||'items').orderBy('createdAt','desc').get(); return snap.docs.map(d => ({ id: d.id, ...d.data() })); } catch(e) { console.warn('Firestore read failed, using local', e); } }
   return JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');
 }
-
 async function saveItem(item) {
-  if (db && !cfg.localOnly) {
-    await db.collection(cfg.fbCol||'items').doc(item.id).set(item);
-  }
-  const items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');
-  items.unshift(item);
-  localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+  if (db && !cfg.localOnly) await db.collection(cfg.fbCol||'items').doc(item.id).set(item);
+  const items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]'); items.unshift(item); localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
 }
-
 async function updateItem(item) {
-  if (db && !cfg.localOnly) {
-    await db.collection(cfg.fbCol||'items').doc(item.id).set(item, { merge:true });
-  }
-  let items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');
-  const idx = items.findIndex(i => i.id === item.id);
-  if (idx >= 0) items[idx] = item;
-  else items.unshift(item);
-  localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+  if (db && !cfg.localOnly) await db.collection(cfg.fbCol||'items').doc(item.id).set(item, { merge:true });
+  let items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]'); const idx = items.findIndex(i => i.id === item.id);
+  if (idx >= 0) items[idx] = item; else items.unshift(item); localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
 }
-
 async function deleteItem(id) {
-  if (db && !cfg.localOnly) {
-    await db.collection(cfg.fbCol||'items').doc(id).delete();
-  }
-  let items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');
-  items = items.filter(i => i.id !== id);
-  localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+  if (db && !cfg.localOnly) await db.collection(cfg.fbCol||'items').doc(id).delete();
+  let items = JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]'); items = items.filter(i => i.id !== id); localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
 }
 
 // ══════════════════════════════════════════════
-// REFRESH MAIN SCREEN
+// MAIN SCREEN REFRESH & SEARCH
 // ══════════════════════════════════════════════
 async function refreshMain() {
   const items = await loadItems();
-  renderStats(items);
-  renderRecent(items.slice(0,6));
-}
-
-function renderStats(items) {
-  const locs = [...new Set(items.map(i=>i.locationName).filter(Boolean))];
-  const bagCount = [...new Set(items.map(i=>(i.locationId||'')+'_'+(i.bagNum||1)))].length;
-  document.getElementById('stats-row').innerHTML = `
-    <div class="stat-card"><div class="stat-num">${items.length}</div><div class="stat-label">物品總數</div></div>
-    <div class="stat-card"><div class="stat-num">${bagCount}</div><div class="stat-label">收納袋</div></div>
-    <div class="stat-card"><div class="stat-num">${locs.length}</div><div class="stat-label">收納位置</div></div>`;
-}
-
-function renderRecent(items) {
+  const locs = [...new Set(items.map(i=>i.locationName).filter(Boolean))], bagCount = [...new Set(items.map(i=>(i.locationId||'')+'_'+(i.bagNum||1)))].length;
+  document.getElementById('stats-row').innerHTML = `<div class="stat-card"><div class="stat-num">${items.length}</div><div class="stat-label">物品總數</div></div><div class="stat-card"><div class="stat-num">${bagCount}</div><div class="stat-label">收納袋</div></div><div class="stat-card"><div class="stat-num">${locs.length}</div><div class="stat-label">收納位置</div></div>`;
   const el = document.getElementById('recent-list');
-  if (!items.length) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-icon">◻</div>尚無建檔物品<br>拍照新增第一件物品</div>`;
-    return;
-  }
-  el.innerHTML = items.map(item => itemRowHTML(item)).join('');
+  if (!items.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">◻</div>尚無建檔物品<br>拍照新增第一件物品</div>`; return; }
+  el.innerHTML = items.slice(0,6).map(item => itemRowHTML(item)).join('');
 }
 
 function itemRowHTML(item) {
-  const thumb = item.imageData
-    ? `<img class="item-thumb" src="${item.imageData}" loading="lazy">`
-    : `<div class="item-thumb-placeholder">◻</div>`;
+  const thumb = item.imageData ? `<img class="item-thumb" src="${item.imageData}" loading="lazy">` : `<div class="item-thumb-placeholder">◻</div>`;
   const qtyBadge = (item.quantity||1) > 1 ? `<span style="font-size:10px;color:var(--accent);font-family:var(--mono)">x${item.quantity}</span>` : '';
-  return `<div class="item-row" onclick="openItemDetail('${item.id}')">
+  return `<div class="item-row" id="row-${item.id}" data-loc="${item.locationId}" onclick="handleItemClick('${item.id}', this)">
+    <input type="checkbox" class="item-checkbox" id="chk-${item.id}">
     ${thumb}
-    <div class="item-info">
-      <div class="item-name">${item.name} ${qtyBadge}</div>
-      <div class="item-meta">
-        <span class="item-loc">#${item.bagNum||1}</span>
-        <span class="item-cat">${item.locationName||''}</span>
-      </div>
-    </div>
+    <div class="item-info"><div class="item-name">${item.name} ${qtyBadge}</div><div class="item-meta"><span class="item-loc">#${item.bagNum||1}</span><span class="item-cat">${item.locationName||''}</span></div></div>
   </div>`;
 }
 
-// ══════════════════════════════════════════════
-// SEARCH
-// ══════════════════════════════════════════════
-// 主畫面搜尋：Enter / 按鈕才觸發
 async function doSearch(value) {
   if (!value.trim()) return;
-  await handleSearch(value);
-}
-
-// 搜尋邏輯（共用）
-let searchTimeout = null;
-async function handleSearch(value) {
-  if (!value.trim()) return;
-  const items = await loadItems();
-    const q = value.toLowerCase();
-    const results = items.filter(item =>
-      (item.name||'').toLowerCase().includes(q) ||
-      (item.name_en||'').toLowerCase().includes(q) ||
-      (item.locationName||'').toLowerCase().includes(q) ||
-      (item.description||'').toLowerCase().includes(q) ||
-      (item.keywords||[]).some(k => k.toLowerCase().includes(q))
-    );
-    document.getElementById('search-title').textContent = `搜尋「${value}」（${results.length}筆）`;
-    const el = document.getElementById('search-results');
-    if (!results.length) {
-      el.innerHTML = `<div class="empty-state"><div class="empty-icon">⌕</div>找不到「${value}」相關物品</div>`;
-    } else {
-      el.innerHTML = results.map(itemRowHTML).join('');
-    }
-    showScreen('s-search');
+  const items = await loadItems(), q = value.toLowerCase();
+  const results = items.filter(i => (i.name||'').toLowerCase().includes(q) || (i.name_en||'').toLowerCase().includes(q) || (i.locationName||'').toLowerCase().includes(q) || (i.description||'').toLowerCase().includes(q) || (i.keywords||[]).some(k => k.toLowerCase().includes(q)));
+  document.getElementById('search-title').textContent = `搜尋「${value}」（${results.length}筆）`;
+  const el = document.getElementById('search-results');
+  if (!results.length) el.innerHTML = `<div class="empty-state"><div class="empty-icon">⌕</div>找不到「${value}」相關物品</div>`;
+  else el.innerHTML = results.map(itemRowHTML).join('');
+  showScreen('s-search');
 }
 
 // ══════════════════════════════════════════════
@@ -1513,47 +894,34 @@ async function handleSearch(value) {
 // ══════════════════════════════════════════════
 async function openInventory() {
   const items = await loadItems();
-  if (!items.length) {
-    document.getElementById('inventory-content').innerHTML =
-      `<div class="empty-state"><div class="empty-icon">◻</div>尚無建檔物品</div>`;
-    showScreen('s-inventory');
-    return;
-  }
+  if (!items.length) { document.getElementById('inventory-content').innerHTML = `<div class="empty-state"><div class="empty-icon">◻</div>尚無建檔物品</div>`; showScreen('s-inventory'); return; }
 
-  // Group by location → bag
   const locGroups = {};
   items.forEach(item => {
-    const locName = item.locationName || '未分類';
-    const locId = item.locationId || 'unknown';
-    if (!locGroups[locId]) locGroups[locId] = { name: locName, bags:{} };
-    const b = item.bagNum || 1;
+    const locId = item.locationId || 'unknown', b = item.bagNum || 1;
+    if (!locGroups[locId]) locGroups[locId] = { name: item.locationName || '未分類', bags:{} };
     if (!locGroups[locId].bags[b]) locGroups[locId].bags[b] = { items:[], usedMl:0 };
-    locGroups[locId].bags[b].items.push(item);
-    locGroups[locId].bags[b].usedMl += (item.estimateVolumeMl || 0) * (item.quantity || 1);
+    locGroups[locId].bags[b].items.push(item); locGroups[locId].bags[b].usedMl += (item.estimateVolumeMl || 0) * (item.quantity || 1);
   });
 
   let html = '';
   Object.entries(locGroups).forEach(([locId, locData]) => {
-    const loc = LOCATIONS.find(l => l.id === locId);
-    const bagSizeMl = loc ? loc.bagSizeMl : 5000;
-    const sizeLabel = bagSizeMl >= 1000 ? (bagSizeMl/1000)+'L' : bagSizeMl+'ml';
-    const total = Object.values(locData.bags).reduce((s,b) => s + b.items.length, 0);
+    const loc = LOCATIONS.find(l => l.id === locId), bagSizeMl = loc ? loc.bagSizeMl : 5000;
+    const sizeLabel = bagSizeMl >= 1000 ? (bagSizeMl/1000)+'L' : bagSizeMl+'ml', total = Object.values(locData.bags).reduce((s,b) => s + b.items.length, 0);
     html += `<div class="zone-group">
       <div class="zone-header">
         <span class="zone-code" style="font-size:16px;width:auto">📍</span>
         <span class="zone-name">${locData.name}</span>
         <span class="zone-count">${total} 件 · ${sizeLabel}/袋</span>
+        <button class="select-all-btn" id="btn-sel-${locId}" onclick="toggleZoneSelect('${locId}')">全選</button>
       </div>`;
     Object.entries(locData.bags).sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([bagNum, bagData]) => {
-      const pct = Math.min(100, Math.round(bagData.usedMl / bagSizeMl * 100));
-      const usedLabel = bagData.usedMl >= 1000 ? (bagData.usedMl/1000).toFixed(1)+'L' : bagData.usedMl+'ml';
+      const pct = Math.min(100, Math.round(bagData.usedMl / bagSizeMl * 100)), usedLabel = bagData.usedMl >= 1000 ? (bagData.usedMl/1000).toFixed(1)+'L' : bagData.usedMl+'ml';
       const barColor = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--accent)' : 'var(--green)';
       html += `<div class="bag-group">
         <div class="bag-header" style="display:flex;align-items:center;gap:8px">
           <span>袋 <span>#${bagNum}</span> · ${bagData.items.length} 件</span>
-          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div style="width:${pct}%;height:100%;background:${barColor};border-radius:2px"></div>
-          </div>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden"><div style="width:${pct}%;height:100%;background:${barColor};border-radius:2px"></div></div>
           <span style="font-size:10px;color:var(--muted)">${usedLabel}/${sizeLabel}</span>
         </div>
         ${bagData.items.map(itemRowHTML).join('')}
@@ -1562,189 +930,104 @@ async function openInventory() {
     html += '</div>';
   });
 
-  document.getElementById('inventory-content').innerHTML = html;
-  showScreen('s-inventory');
+  document.getElementById('inventory-content').innerHTML = html; showScreen('s-inventory');
 }
 
 // ══════════════════════════════════════════════
 // ITEM DETAIL MODAL
 // ══════════════════════════════════════════════
 async function openItemDetail(id) {
-  const items = await loadItems();
-  const item = items.find(i => i.id === id);
-  if (!item) return;
-
-  document.getElementById('modal-img').src = item.imageData || '';
-  document.getElementById('modal-name').textContent = item.name;
-  document.getElementById('modal-badge').textContent = item.locationName || '';
-
-  const volLabel = (item.estimateVolumeMl||0) >= 1000 ? ((item.estimateVolumeMl||0)/1000).toFixed(1)+'L' : (item.estimateVolumeMl||0)+'ml';
-  const qty = item.quantity || 1;
-  const totalVol = (item.estimateVolumeMl||0) * qty;
-  const totalLabel = totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml';
-  const rows = [
-    ['收納位置', item.locationName],
-    ['收納袋',   '#' + (item.bagNum||1)],
-    ['數量',     qty > 1 ? qty + ' 件' : '1 件'],
-    ['預估體積', qty > 1 ? `${volLabel}/件 × ${qty} = ${totalLabel}` : volLabel],
-    ['特徵標籤', (item.featureTags||[]).join('、') || '-'],
-    ['描述',     item.description],
-    ['關鍵字',   (item.keywords||[]).join('、')]
-  ];
-  document.getElementById('modal-rows').innerHTML = rows.map(([k,v]) =>
-    `<div class="modal-row"><span class="modal-key">${k}</span><span class="modal-val">${v||'-'}</span></div>`
-  ).join('');
-
+  const item = (await loadItems()).find(i => i.id === id); if (!item) return;
+  document.getElementById('modal-img').src = item.imageData || ''; document.getElementById('modal-name').textContent = item.name; document.getElementById('modal-badge').textContent = item.locationName || '';
+  const volLabel = (item.estimateVolumeMl||0) >= 1000 ? ((item.estimateVolumeMl||0)/1000).toFixed(1)+'L' : (item.estimateVolumeMl||0)+'ml', qty = item.quantity || 1, totalVol = (item.estimateVolumeMl||0) * qty, totalLabel = totalVol >= 1000 ? (totalVol/1000).toFixed(1)+'L' : totalVol+'ml';
+  document.getElementById('modal-rows').innerHTML = [['收納位置', item.locationName], ['收納袋', '#' + (item.bagNum||1)], ['數量', qty > 1 ? qty + ' 件' : '1 件'], ['預估體積', qty > 1 ? `${volLabel}/件 × ${qty} = ${totalLabel}` : volLabel], ['特徵標籤', (item.featureTags||[]).join('、') || '-'], ['描述', item.description], ['關鍵字', (item.keywords||[]).join('、')]].map(([k,v]) => `<div class="modal-row"><span class="modal-key">${k}</span><span class="modal-val">${v||'-'}</span></div>`).join('');
   document.getElementById('modal-delete-btn').onclick = () => confirmDelete(item.id, item.name);
   document.getElementById('modal-overlay').classList.remove('hidden');
 }
-
-function closeModal(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModalPanel();
-}
-function closeModalPanel() {
-  document.getElementById('modal-overlay').classList.add('hidden');
-}
-
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalPanel(); }
+function closeModalPanel() { document.getElementById('modal-overlay').classList.add('hidden'); }
 async function confirmDelete(id, name) {
   if (!confirm(`確定要刪除「${name}」的建檔資料嗎？`)) return;
-  closeModalPanel();
-  await deleteItem(id);
-  showToast(name + ' 已刪除');
-  refreshMain();
-  // Refresh current screen
-  const inv = document.getElementById('s-inventory');
-  if (inv.classList.contains('active')) openInventory();
+  closeModalPanel(); await deleteItem(id); showToast(name + ' 已刪除'); refreshMain();
+  if (document.getElementById('s-inventory').classList.contains('active')) openInventory();
 }
 
-// ══════════════════════════════════════════════
-// HELPERS
-// ══════════════════════════════════════════════
-function setProcessingMsg(msg) {
-  document.getElementById('processing-msg').textContent = msg;
-}
-
-function showToast(msg, type='success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = type === 'error' ? 'var(--red)' : 'var(--green)';
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
-}
+function setProcessingMsg(msg) { document.getElementById('processing-msg').textContent = msg; }
+function showToast(msg, type='success') { const t = document.getElementById('toast'); t.textContent = msg; t.style.background = type === 'error' ? 'var(--red)' : 'var(--green)'; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800); }
 
 // ══════════════════════════════════════════════
-// LOCATIONS MANAGEMENT SCREEN
+// LOCATIONS MANAGEMENT
 // ══════════════════════════════════════════════
 function openLocations() {
-  const inputStyle = 'width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:6px;font-size:14px;margin-bottom:8px';
-  const labelStyle = 'display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-family:var(--mono)';
-
-  let html = `<div style="margin-bottom:16px;font-size:13px;color:var(--muted)">
-    定義家中的收納位置，AI 辨識物品後會建議最適合的位置。<br>
-    <span style="color:var(--accent)">目前共 ${LOCATIONS.length} 個收納位置</span>
-  </div>`;
-
-  LOCATIONS.forEach((loc) => {
-    const sizeLabel = loc.bagSizeMl >= 1000 ? (loc.bagSizeMl/1000)+'L' : loc.bagSizeMl+'ml';
-    html += `<div id="loc-card-${loc.id}" class="zone-group" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px">
-      <label style="${labelStyle}">位置名稱</label>
-      <input type="text" id="edit-name-${loc.id}" value="${loc.name}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')">
-      <label style="${labelStyle}">袋子容量 (ml) — 目前 ${sizeLabel}</label>
-      <input type="number" id="edit-size-${loc.id}" value="${loc.bagSizeMl}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')">
-      <label style="${labelStyle}">提示詞</label>
-      <input type="text" id="edit-hints-${loc.id}" value="${loc.hints}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')">
-      <div style="display:flex;gap:8px;margin-top:4px">
-        <button id="save-btn-${loc.id}" class="btn-sm" style="display:none;background:var(--accent-bg);border-color:var(--accent);color:var(--accent)" onclick="doSaveLocation('${loc.id}')">儲存變更</button>
-        <button class="btn-danger" style="font-size:11px;padding:4px 10px" onclick="doRemoveLocation('${loc.id}')">刪除</button>
-      </div>
-    </div>`;
-  });
-
-  html += `
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:16px">
-    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--accent)">+ 新增收納位置</div>
-    <label style="${labelStyle}">位置名稱</label>
-    <input type="text" id="new-loc-name" placeholder="例：客廳沙發櫃" style="${inputStyle}">
-    <label style="${labelStyle}">袋子容量 (ml)</label>
-    <input type="number" id="new-loc-size" placeholder="2000" value="5000" style="${inputStyle}">
-    <label style="${labelStyle}">提示詞（告訴 AI 這裡通常放什麼）</label>
-    <input type="text" id="new-loc-hints" placeholder="例：遙控器、藥品、日用小物" style="${inputStyle}">
-    <button class="btn-primary" style="margin-top:0" onclick="doAddLocation()">新增</button>
-  </div>`;
-
-  document.getElementById('zones-content').innerHTML = html;
-  showScreen('s-zones');
+  const inputStyle = 'width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:6px;font-size:14px;margin-bottom:8px', labelStyle = 'display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-family:var(--mono)';
+  let html = `<div style="margin-bottom:16px;font-size:13px;color:var(--muted)">定義家中的收納位置，AI 辨識物品後會建議最適合的位置。<br><span style="color:var(--accent)">目前共 ${LOCATIONS.length} 個收納位置</span></div>`;
+  LOCATIONS.forEach((loc) => { html += `<div id="loc-card-${loc.id}" class="zone-group" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px"><label style="${labelStyle}">位置名稱</label><input type="text" id="edit-name-${loc.id}" value="${loc.name}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')"><label style="${labelStyle}">袋子容量 (ml) — 目前 ${loc.bagSizeMl >= 1000 ? (loc.bagSizeMl/1000)+'L' : loc.bagSizeMl+'ml'}</label><input type="number" id="edit-size-${loc.id}" value="${loc.bagSizeMl}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')"><label style="${labelStyle}">提示詞</label><input type="text" id="edit-hints-${loc.id}" value="${loc.hints}" style="${inputStyle}" onchange="markLocChanged('${loc.id}')"><div style="display:flex;gap:8px;margin-top:4px"><button id="save-btn-${loc.id}" class="btn-sm" style="display:none;background:var(--accent-bg);border-color:var(--accent);color:var(--accent)" onclick="doSaveLocation('${loc.id}')">儲存變更</button><button class="btn-danger" style="font-size:11px;padding:4px 10px" onclick="doRemoveLocation('${loc.id}')">刪除</button></div></div>`; });
+  html += `<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:16px"><div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--accent)">+ 新增收納位置</div><label style="${labelStyle}">位置名稱</label><input type="text" id="new-loc-name" placeholder="例：客廳沙發櫃" style="${inputStyle}"><label style="${labelStyle}">袋子容量 (ml)</label><input type="number" id="new-loc-size" placeholder="2000" value="5000" style="${inputStyle}"><label style="${labelStyle}">提示詞（告訴 AI 這裡通常放什麼）</label><input type="text" id="new-loc-hints" placeholder="例：遙控器、藥品、日用小物" style="${inputStyle}"><button class="btn-primary" style="margin-top:0" onclick="doAddLocation()">新增</button></div>`;
+  document.getElementById('zones-content').innerHTML = html; showScreen('s-zones');
 }
-
-function markLocChanged(id) {
-  const btn = document.getElementById('save-btn-' + id);
-  if (btn) btn.style.display = 'inline-block';
-}
-
+function markLocChanged(id) { const btn = document.getElementById('save-btn-' + id); if (btn) btn.style.display = 'inline-block'; }
 async function doSaveLocation(id) {
-  const loc = LOCATIONS.find(l => l.id === id);
-  if (!loc) return;
-
-  const newName  = document.getElementById('edit-name-' + id).value.trim();
-  const newSize  = parseInt(document.getElementById('edit-size-' + id).value) || loc.bagSizeMl;
-  const newHints = document.getElementById('edit-hints-' + id).value.trim();
-
+  const loc = LOCATIONS.find(l => l.id === id); if (!loc) return;
+  const newName = document.getElementById('edit-name-' + id).value.trim(), newSize = parseInt(document.getElementById('edit-size-' + id).value) || loc.bagSizeMl, newHints = document.getElementById('edit-hints-' + id).value.trim();
   if (!newName) { alert('位置名稱不能為空'); return; }
-
-  const oldName = loc.name;
-  loc.name      = newName;
-  loc.bagSizeMl = newSize;
-  loc.hints     = newHints;
-  saveLocations();
-
-  // If name changed, update all existing items that reference this location
+  const oldName = loc.name; loc.name = newName; loc.bagSizeMl = newSize; loc.hints = newHints; saveLocations();
   if (oldName !== newName) {
-    const items = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]');
-    let updated = 0;
-    items.forEach(item => {
-      if (item.locationId === id) {
-        item.locationName = newName;
-        updated++;
-      }
-    });
-    if (updated > 0) {
-      localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
-      // Also update Firestore if connected
-      if (db && !cfg.localOnly) {
-        for (const item of items.filter(i => i.locationId === id)) {
-          try { await db.collection(cfg.fbCol||'items').doc(item.id).update({ locationName: newName }); } catch(e) {}
-        }
-      }
-    }
+    const items = JSON.parse(localStorage.getItem(ITEMS_KEY) || '[]'); let updated = 0;
+    items.forEach(item => { if (item.locationId === id) { item.locationName = newName; updated++; } });
+    if (updated > 0) { localStorage.setItem(ITEMS_KEY, JSON.stringify(items)); if (db && !cfg.localOnly) for (const item of items.filter(i => i.locationId === id)) try { await db.collection(cfg.fbCol||'items').doc(item.id).update({ locationName: newName }); } catch(e) {} }
     showToast(`已更新「${newName}」，${updated} 件物品同步更新`);
-  } else {
-    showToast('已儲存變更');
-  }
-
+  } else { showToast('已儲存變更'); }
   openLocations();
 }
-
 function doAddLocation() {
-  const name = document.getElementById('new-loc-name').value.trim();
-  const size = parseInt(document.getElementById('new-loc-size').value) || 5000;
-  const hints = document.getElementById('new-loc-hints').value.trim();
-  if (!name) { alert('請輸入位置名稱'); return; }
-  addLocation(name, size, hints);
-  showToast('已新增：' + name);
-  openLocations();
+  const name = document.getElementById('new-loc-name').value.trim(), size = parseInt(document.getElementById('new-loc-size').value) || 5000, hints = document.getElementById('new-loc-hints').value.trim();
+  if (!name) { alert('請輸入位置名稱'); return; } addLocation(name, size, hints); showToast('已新增：' + name); openLocations();
+}
+function doRemoveLocation(id) {
+  const loc = LOCATIONS.find(l => l.id === id); if (!loc) return; if (!confirm(`確定要刪除「${loc.name}」嗎？已建檔的物品不會被刪除。`)) return;
+  removeLocation(id); showToast('已刪除：' + loc.name); openLocations();
 }
 
-function doRemoveLocation(id) {
-  const loc = LOCATIONS.find(l => l.id === id);
-  if (!loc) return;
-  if (!confirm(`確定要刪除「${loc.name}」嗎？已建檔的物品不會被刪除。`)) return;
-  removeLocation(id);
-  showToast('已刪除：' + loc.name);
-  openLocations();
+// ══════════════════════════════════════════════
+// BATCH DELETE LOGIC
+// ══════════════════════════════════════════════
+let isSelectMode = false; let selectedItemIds = new Set();
+function toggleSelectMode() {
+  isSelectMode = !isSelectMode; selectedItemIds.clear();
+  const inv = document.getElementById('inventory-content'), btn = document.getElementById('btn-toggle-select'), bar = document.getElementById('batch-action-bar');
+  if (isSelectMode) { inv.classList.add('select-mode'); btn.textContent = '取消'; bar.classList.add('show'); updateBatchActionBar(); document.querySelectorAll('.item-checkbox').forEach(c => c.checked = false); document.querySelectorAll('.select-all-btn').forEach(b => b.textContent = '全選'); } 
+  else { inv.classList.remove('select-mode'); btn.textContent = '選取'; bar.classList.remove('show'); }
 }
+function handleItemClick(id, el) {
+  if (!isSelectMode) return openItemDetail(id);
+  const row = el ? el.closest('.item-row') : null;
+  const c = row ? row.querySelector('.item-checkbox') : document.querySelector('#inventory-content #chk-'+id);
+  if (selectedItemIds.has(id)) { selectedItemIds.delete(id); if(c) c.checked=false; } else { selectedItemIds.add(id); if(c) c.checked=true; }
+  updateBatchActionBar();
+}
+function toggleZoneSelect(locId) {
+  event.stopPropagation();
+  const rows = document.querySelectorAll(`#inventory-content .item-row[data-loc="${locId}"]`);
+  const ids = Array.from(rows).map(r => r.id.replace('row-', ''));
+  const allSelected = ids.every(id => selectedItemIds.has(id));
+  ids.forEach((id, i) => {
+    if (allSelected) selectedItemIds.delete(id); else selectedItemIds.add(id);
+    const c = rows[i] ? rows[i].querySelector('.item-checkbox') : null; if (c) c.checked = !allSelected;
+  });
+  const btn = document.getElementById('btn-sel-' + locId); if (btn) btn.textContent = allSelected ? '全選' : '取消全選';
+  updateBatchActionBar();
+}
+function updateBatchActionBar() { document.getElementById('selected-count').textContent = '已選取 ' + selectedItemIds.size + ' 件'; }
+async function confirmBatchDelete() {
+  if (selectedItemIds.size === 0) return;
+  if (!confirm('確定要刪除選取的 ' + selectedItemIds.size + ' 件物品嗎？此動作無法復原。')) return;
+  showScreen('s-processing'); setProcessingMsg('批次刪除中...');
+  try { for (const id of selectedItemIds) await deleteItem(id); showToast('已成功刪除 ' + selectedItemIds.size + ' 件物品'); } catch(e) { showToast('刪除過程發生錯誤','error'); }
+  toggleSelectMode(); refreshMain(); openInventory();
+}
+function closeInventory() { if (isSelectMode) toggleSelectMode(); showScreen('s-main'); }
 
 // START
-// ══════════════════════════════════════════════
 init();
 </script>
 </body>
